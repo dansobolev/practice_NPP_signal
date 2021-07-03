@@ -1,21 +1,12 @@
-{% load static %}
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="static/css/style.css"/>
-</head>
-<body>
-<input class = "first__input">
-<input class = "first__second">
-<input class = "first__third">
-<select class = "detail__type">
-    <option value = "0">Сборка</option>
-    <option value = "1">Деталь</option>
-    <option value = "2">Стандартное изделие</option>
-</select>
-<button class = "load__detail">Добавить изделие</button>
-</body>
-<script src="{% static 'js/script.js' %}"></script>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>НПП Сигнал</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <div id = "main"></div>
+    </body>
+    <script type = "text/javascript" src = "script.js"></script>
 </html>
