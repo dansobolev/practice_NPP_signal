@@ -1,0 +1,29 @@
+[
+  {
+    "model": "signal_app.OtherProduct",
+    "pk": 1,
+    "fields": {
+      "name": "Проушина замка SensLock SZST-21 (из комплекта Электронный замок SensLock SZST-21)",
+      "entry_number": 1,
+      "count_number": 14
+    }
+  },
+  {
+    "model": "signal_app.OtherProduct",
+    "pk": 2,
+    "fields": {
+      "name": "Шильдик",
+      "entry_number": 1,
+      "count_number": 1
+    }
+  },
+  {
+    "model": "signal_app.OtherProduct",
+    "pk": 3,
+    "fields": {
+      "name": "Электронный замок SensLock SZST-21",
+      "entry_number": 1,
+      "count_number": 14
+    }
+  }
+]

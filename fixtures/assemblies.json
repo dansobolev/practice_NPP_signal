@@ -1,0 +1,30 @@
+[
+  {
+    "model": "signal_app.Assembly",
+    "pk": 1,
+    "fields": {
+      "number": "ЯИУШ.301446.006",
+      "name": "Шкаф АПС-Ц",
+      "entry_number": ""
+    }
+  },
+  {
+    "model": "signal_app.Assembly",
+    "pk": 2,
+    "fields": {
+      "number": "ЯИУШ.301318.023",
+      "name": "Основание",
+      "entry_number": "ЯИУШ.301446.006"
+    }
+  },
+  {
+    "model": "signal_app.Assembly",
+    "pk": 3,
+    "fields": {
+      "number": "ЯИУШ.301251.077-01",
+      "name": "Крыша",
+      "entry_number": "ЯИУШ.301446.006"
+    }
+  }
+]
+
