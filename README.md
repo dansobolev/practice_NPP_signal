@@ -6,4 +6,9 @@
  - `venv\Scripts\activate` - для активация виртуального окружения
  - `pip install -r requirements.txt` - для установки зависимостей
  - `python manage.py migrate` - для накатывания миграций
+ -  поочередно:
+    - python manage.py loaddata fixtures/assemblies.json 
+    - python manage.py loaddata fixtures/details.json 
+    - python manage.py loaddata fixtures/other_products.json
+    - python manage.py loaddata fixtures/standard_products.json
  - `python manage.py runserver` - для запуска проекта
