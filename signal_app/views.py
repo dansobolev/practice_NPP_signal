@@ -6,15 +6,23 @@ from .models import Assembly, BaseProduct
 from .enums import TypeEnum
 from .exceptions import ObjectDoesNotExist
 
+from .tree_transform_django import id_dict, ancestors_list, bd_to_dict
+from .trees_algorithms import flatten
+
+from pprint import pprint
+
 
 def index(request):
     return render(request, 'base.html')
 
 
 def show_tree(request):
-    assembly = BaseProduct.objects.all()
-    for i in assembly:
-        print(i.product_type)
+    assembly = Assembly.objects.all()
+    basep = BaseProduct.objects.all()
+
+    # print(len(assembly))
+    pprint(bd_to_dict(assembly, basep))
+
     return render(request, 'base.html')
 
 
