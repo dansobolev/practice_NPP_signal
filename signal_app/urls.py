@@ -19,6 +19,6 @@ from django.urls import path
 from .views import index, show_tree
 
 urlpatterns = [
-    path('', index),
+    path('index/', index),
     path('show-tree/', show_tree)
 ]
