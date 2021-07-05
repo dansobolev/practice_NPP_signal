@@ -1,0 +1,205 @@
+[
+  {
+    "model": "signal_app.BaseProduct",
+    "pk": 1,
+    "fields": {
+      "decimal_number": "ЯИУШ.741224.715",
+      "name": "Центральная перегородка правая",
+      "entry_number": "ЯИУШ.301446.006",
+      "count_number": 1,
+      "product_type": 1
+    }
+  },
+  {
+    "model": "signal_app.BaseProduct",
+    "pk": 2,
+    "fields": {
+      "decimal_number": "ЯИУШ.745551.004",
+      "name": "Скоба тяги",
+      "entry_number": "ЯИУШ.301446.006",
+      "count_number": 5,
+      "product_type": 1
+    }
+  },
+  {
+    "model": "signal_app.BaseProduct",
+    "pk": 3,
+    "fields": {
+      "decimal_number": "ЯИУШ.745129.001",
+      "name": "Тяга",
+      "entry_number": "ЯИУШ.301446.006",
+      "count_number": 1,
+      "product_type": 1
+    }
+  },
+
+
+  {
+    "model": "signal_app.BaseProduct",
+    "pk": 4,
+    "fields": {
+      "decimal_number": "ЯИУШ.735336.008",
+      "name": "Основание",
+      "entry_number": "ЯИУШ.301318.023",
+      "count_number": 1,
+      "product_type": 1
+    }
+  },
+  {
+    "model": "signal_app.BaseProduct",
+    "pk": 5,
+    "fields": {
+      "decimal_number": "ЯИУШ.735336.009",
+      "name": "Стенка основания",
+      "entry_number": "ЯИУШ.301318.023",
+      "count_number": 1,
+      "product_type": 1
+    }
+  },
+
+
+  {
+    "model": "signal_app.BaseProduct",
+    "pk": 6,
+    "fields": {
+      "decimal_number": "ЯИУШ.735332.011-01",
+      "name": "Основание крыши",
+      "entry_number": "ЯИУШ.301251.077-01",
+      "count_number": 1,
+      "product_type": 1
+    }
+  },
+  {
+    "model": "signal_app.BaseProduct",
+    "pk": 7,
+    "fields": {
+      "decimal_number": "ЯИУШ.735336.007",
+      "name": "Панель крыши",
+      "entry_number": "ЯИУШ.301251.077-01",
+      "count_number": 1,
+      "product_type": 1
+    }
+  },
+
+
+
+  {
+    "model": "signal_app.BaseProduct",
+    "pk": 8,
+    "fields": {
+      "decimal_number": "",
+      "name": "Винт М4Х6 DIN 7985",
+      "entry_number": "",
+      "count_number": 42,
+      "product_type": 2
+    }
+  },
+  {
+    "model": "signal_app.BaseProduct",
+    "pk": 9,
+    "fields": {
+      "decimal_number": "",
+      "name": "Винт М4х10 DIN 7985",
+      "entry_number": "",
+      "count_number": 46,
+      "product_type": 2
+    }
+  },
+  {
+    "model": "signal_app.BaseProduct",
+    "pk": 10,
+    "fields": {
+      "decimal_number": "",
+      "name": "Винт М5х12 DIN 7985",
+      "entry_number": "",
+      "count_number": 18,
+      "product_type": 2
+    }
+  },
+
+
+  {
+    "model": "signal_app.BaseProduct",
+    "pk": 11,
+    "fields": {
+      "decimal_number": "",
+      "name": "Винт М4Х6 DIN 7985",
+      "entry_number": "",
+      "count_number": 2,
+      "product_type": 2
+    }
+  },
+  {
+    "model": "signal_app.BaseProduct",
+    "pk": 12,
+    "fields": {
+      "decimal_number": "",
+      "name": "Втулка запрессовочная BSO-M3-6",
+      "entry_number": "",
+      "count_number": 2,
+      "product_type": 2
+    }
+  },
+
+
+  {
+    "model": "signal_app.BaseProduct",
+    "pk": 13,
+    "fields": {
+      "decimal_number": "",
+      "name": "Втулка запрессовочная BSO-M3-10 глухая",
+      "entry_number": "",
+      "count_number": 4,
+      "product_type": 2
+    }
+  },
+  {
+    "model": "signal_app.BaseProduct",
+    "pk": 14,
+    "fields": {
+      "decimal_number": "",
+      "name": "Шпилька запрессовочная РЕМ М4х12",
+      "entry_number": "",
+      "count_number": 2,
+      "product_type": 2
+    }
+  },
+
+
+
+  {
+    "model": "signal_app.BaseProduct",
+    "pk": 15,
+    "fields": {
+      "decimal_number": "",
+      "name": "Проушина замка SensLock SZST-21 (из комплекта Электронный замок SensLock SZST-21)",
+      "entry_number": "",
+      "count_number": 14,
+      "product_type": 3
+    }
+  },
+  {
+    "model": "signal_app.BaseProduct",
+    "pk": 16,
+    "fields": {
+      "decimal_number": "ЯИУШ.754312.010",
+      "name": "Шильдик",
+      "entry_number": "",
+      "count_number": 1,
+      "product_type": 3
+    }
+  },
+  {
+    "model": "signal_app.BaseProduct",
+    "pk": 17,
+    "fields": {
+      "decimal_number": "",
+      "name": "Электронный замок SensLock SZST-21",
+      "entry_number": "",
+      "count_number": 14,
+      "product_type": 3
+    }
+  }
+]
+
+

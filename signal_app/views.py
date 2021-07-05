@@ -1,25 +1,10 @@
-from django.shortcuts import render, HttpResponse
-from .models import Assembly, Detail, StandardProduct, OtherProduct
 import json
-import enum
 
+from django.shortcuts import render, HttpResponse
 
-class ObjectDoesNotExist(Exception):
-    pass
-
-
-class TypeEnum(enum.Enum):
-    ASSEMBLY = 0
-    DETAIL = 1
-    STANDARD_PRODUCTS = 2
-    OTHER_PRODUCTS = 3
-
-    __mapping__ = {
-        'ASSEMBLY': 'Cборка',
-        'DETAIL': 'Деталь',
-        'STANDARD_PRODUCTS': 'Стандартные изделия',
-        'OTHER_PRODUCTS': 'Прочие изделия',
-    }
+from .models import Assembly, BaseProduct
+from .enums import TypeEnum
+from .exceptions import ObjectDoesNotExist
 
 
 def index(request):
@@ -27,9 +12,9 @@ def index(request):
 
 
 def show_tree(request):
-    assembly = Assembly.objects.all()
+    assembly = BaseProduct.objects.all()
     for i in assembly:
-        print(i.number)
+        print(i.product_type)
     return render(request, 'base.html')
 
 
@@ -38,19 +23,19 @@ def save_data(request):
     type_ = TypeEnum(int(body['type'])).name
     body.update({'type': type_.title()})
 
-    model = eval(body['type'])
     # if model != TypeEnum(type)
-    if model != TypeEnum.ASSEMBLY.name:
+    if type_ != TypeEnum.ASSEMBLY.name:
         try:
             item_parent = Assembly.objects.filter(number=body['vhod']).get()
         except Assembly.DoesNotExist:
             raise ObjectDoesNotExist("Object doesn't exist.")
 
-        new_db_object = model.objects.create(
+        new_db_object = BaseProduct.objects.create(
             number=body['number'],
             name=body['name'],
             entry_number=item_parent.id,
-            count_number=3
+            count_number=3,
+            product_type=type_
         )
         new_db_object.save()
 
