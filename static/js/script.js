@@ -47,7 +47,7 @@ function addingData(data, recN, selfInDom){
             addButton.className = "add__button";
             addButton.innerHTML = 'Добавить элемент';
             img = document.createElement('img');
-            img.setAttribute('src', 'img/add.svg');
+            img.setAttribute('src', '../static/img/add.svg');
             img.className = "add__button__img"
             addButton.appendChild(img);
 
