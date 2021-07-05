@@ -25,15 +25,15 @@ let sendData = {};
 
 function sendDetail(){
     elemName = document.querySelector('#inp__name');
-    elemDecnum = document.querySelector('#inp__decnum');
+    elemDecnum = document.querySelector('#inp__decnum').value;
     elemType = document.querySelector('#inp__type').value;
-    sendData['Name'] = elemName;
-    sendData['Decnum'] = elemDecnum;
-    sendData['Type'] = elemType
+    sendData['name'] = elemName;
+    sendData['number'] = elemDecnum;
+    sendData['type'] = elemType;
     $.ajax({
         type: "POST",
-        url: "127.0.0.1::5500",
-        data: JSON.stringify(jsendData),
+        url: "http://127.0.0.1:8000/save-data/",
+        data: JSON.stringify(sendData),
         type: 'JSON'
       });    
 }
