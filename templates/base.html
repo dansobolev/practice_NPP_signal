@@ -3,11 +3,40 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>НПП Сигнал</title>
-        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="../static/css/style.css">
     </head>
     <body>
-        <div id = "main"></div>
+        <div class = "index">
+            <div id = "nav"></div>
+            <div class = "optional">
+                <div class = "optional__img"></div>
+                <div class = "optional__adding">
+                    <div class = "optional__adding__content">
+                        <div class= "optional__adding__item">
+                            <div class= "optional__adding__item__title">Название</div>
+                            <input class= "optional__adding__item__inp" id = "inp__name"></input>
+                        </div>
+                        <div class= "optional__adding__item">
+                            <div class= "optional__adding__item__title">Децимальный номер</div>
+                            <input class= "optional__adding__item__inp" id = "inp__decnum"></input>
+                        </div>
+                        <div class= "optional__adding__item">
+                            <div class= "optional__adding__item__title">Тип Изделия</div>
+                            <select class= "optional__adding__item__inp" id = "inp__type">
+                                <option value = "">Шайба</option>
+                                <option value = "">Сборка</option>
+                                <option value = "">Крыша</option>
+                            </select>
+                        </div>       
+                        <div class= "optional__adding__item">
+                            <div class= "optional__adding__item__title"></div>
+                            <button class= "optional__adding__item__button" onclick = "sendDetail()">Отправить</button>
+                        </div>                 
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <script type = "text/javascript" src = "script.js"></script>
+    <script type = "text/javascript" src = "../static/js/script.js"></script>
 </html>

@@ -21,15 +21,17 @@ $(document).ready(function(){
     });
 });
 
-let sendData = {};
+let sendData = new Object();
 
 function sendDetail(){
-    elemName = document.querySelector('#inp__name');
-    elemDecnum = document.querySelector('#inp__decnum').value;
-    elemType = document.querySelector('#inp__type').value;
+    elemName = (document.querySelector('#inp__name')).value;
+    elemDecnum = (document.querySelector('#inp__decnum')).value;
+    elemVhod = (document.querySelector('#inp__vhod')).value;
+    elemType = (document.querySelector('#inp__type')).value;
     sendData['name'] = elemName;
     sendData['number'] = elemDecnum;
     sendData['type'] = elemType;
+    sendData['vhod'] = elemVhod;
     $.ajax({
         type: "POST",
         url: "http://127.0.0.1:8000/save-data/",
@@ -85,7 +87,7 @@ window.onload = function(){
     (document.querySelectorAll('.add__button')).forEach(function(e){
         $(e).click(function(){
            $(document.querySelector('.optional__adding__content')).toggleClass('show');
-            sendData["parent_dec"] = (e.parentElement).getAttribute('decnumber');
+            //sendData["parent_dec"] = (e.parentElement).getAttribute('decnumber');
         })
     })
 }
