@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 from .models import Assembly, Detail, StandardProduct, OtherProduct
 
 
@@ -16,3 +16,8 @@ def show_tree(request):
     print(standard_products)
     print(other_products)
     return render(request, 'base.html')
+
+
+def save_data(request):
+    print(request.body)
+    return HttpResponse(request, {'Hello': 'world'})
