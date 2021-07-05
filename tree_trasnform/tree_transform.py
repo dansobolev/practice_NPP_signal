@@ -17,11 +17,14 @@ dict_type = {'Сборка': 'assembly',
 
 assembly2 = assembly.copy()
 assembly2['Принадлежность'] = assembly['Принадлежность'].map(dict_type)
+assembly2.columns = ['id', 'name', 'vhod', 'amount', 'type']
+# print(assembly2.columns)
 
 
 # Отображение: дец. номер -> id (id - номер строки в БД)
 def dict_1(frame):  # takes pandas DataFrame
-    return {frame.iloc[i]['Децимальный номер']: i for i in frame.index}
+    '''return {frame.iloc[i]['Децимальный номер']: i for i in frame.index}'''
+    return {frame.iloc[i]['id']: i for i in frame.index}
 
 
 # Пребразование БД в список непосредственных предков
@@ -29,7 +32,8 @@ def ancestors_list(frame):  # takes pandas DataFrame
     d = dict_1(frame)
     anc_lst = [-1]              # TODO: С учетом того, что список в БД уже упорядочен, иначе нужно искать,
     for i in frame.index[1:]:   # TODO: какая вершина корневая и сопоставлять ее номеру в списке предков -1
-        anc_lst.append(d[frame.iloc[i]['Первичная входимость']])
+        '''anc_lst.append(d[frame.iloc[i]['Первичная входимость']])'''
+        anc_lst.append(d[frame.iloc[i]['vhod']])
     return anc_lst
 
 
@@ -43,8 +47,9 @@ def bd_to_dict(frame, k=0, descs_lst=None):  # TODO: k=0 С учетом тог�
     if descs_lst is None:
         descs_lst = ta.to_descendants_list(ancestors_list(frame))
     # Формирование словаря для текущей детали
-    names = ['Принадлежность', 'Децимальный номер', 'Наименовании позиции',
-             'Применяемость, шт.', 'Первичная входимость']
+    '''names = ['Принадлежность', 'Децимальный номер', 'Наименовании позиции',
+             'Применяемость, шт.', 'Первичная входимость']'''
+    names = ['id', 'name', 'vhod', 'type']
     values = frame.iloc[k][names]               # TODO: можно не переупорядочивать, если заранее (при создании изделия,
     d = {n: v for n,v in zip(names, values)}    # TODO: а соответственно при создании БД) упорядочить столбцы в БД как нужно
     d['sub'] = []
@@ -55,4 +60,5 @@ def bd_to_dict(frame, k=0, descs_lst=None):  # TODO: k=0 С учетом тог�
     return d
 
 
-pprint(bd_to_dict(assembly2))
+# pprint(bd_to_dict(assembly2))
+# pprint(bd_to_dict(assembly2)['sub'][0])
