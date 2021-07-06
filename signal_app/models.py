@@ -9,7 +9,7 @@ class Assembly(models.Model):
     entry_number = models.CharField(max_length=100, help_text='Входимость')
 
     def __str__(self):
-        return f'Сборка: {self.decimal_number}, {self.name}, {self.entry_number}'
+        return f'Сборка: {self.decimal_number}, Наименование: {self.name}, Входимость: {self.entry_number}'
 
 
 class BaseProduct(models.Model):
