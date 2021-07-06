@@ -165,3 +165,36 @@ body {
     opacity: 1;
     z-index: 1;
 }
+.registration{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.registration__container{
+    margin-top: 100px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+}
+.registration__item{
+    margin-top: 20px;
+    display: flex;
+}
+.registration__item input{
+    padding-left: 10px;
+    border: 1px solid black;
+    margin-left: auto;
+    width: 250px;
+    height: 30px;
+    font-size: 20px;
+}
+.registration{
+    font-size: 20px;
+}
+#regpost{
+    margin-left: auto;
+}
+.registration__btn{
+    margin-top: 20px;
+    height: 40px;
+}
