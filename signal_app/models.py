@@ -20,4 +20,4 @@ class BaseProduct(models.Model):
     product_type = models.IntegerField(choices=TypeEnum.choices(), help_text='Тип изделия')
 
     def __str__(self):
-        return f'Изделие типа: {self.product_type}, первичная входимость: {self.entry_number}'
+        return f'Изделие типа: {TypeEnum(self.product_type).name.title()}, первичная входимость: {self.entry_number}'
