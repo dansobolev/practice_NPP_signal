@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Assembly, BaseProduct
+
+
+admin.site.register(Assembly)
+admin.site.register(BaseProduct)

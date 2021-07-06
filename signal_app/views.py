@@ -2,18 +2,21 @@ import json
 
 from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required,permission_required
 
 from .models import Assembly, BaseProduct
 from .enums import TypeEnum
 from .exceptions import ObjectDoesNotExist
-
 from .tree_transform_django import bd_to_dict
+from users.permissions import project_permissions_required
 
 
 def index(request):
     return render(request, 'base.html')
 
 
+@project_permissions_required(['signal_app.change_assembly', 'signal_app.change_baseproduct'])
+@login_required
 def show_tree(request):
     assembly = Assembly.objects.all()
     base_products = BaseProduct.objects.all()
@@ -23,6 +26,8 @@ def show_tree(request):
     return JsonResponse(response)
 
 
+@project_permissions_required(['signal_app.change_assembly', 'signal_app.change_baseproduct'])
+@login_required
 def save_data(request):
     body = json.loads(request.body)
     type_ = TypeEnum(int(body['type']))
