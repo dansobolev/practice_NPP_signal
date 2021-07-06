@@ -40,7 +40,7 @@ def save_data(request):
         )
         new_db_object.save()
 
-        return HttpResponse(request, '')
+        return HttpResponse(request, status=204)
 
     new_db_object = Assembly.objects.create(
         decimal_number=body['number'],
@@ -49,4 +49,4 @@ def save_data(request):
     )
     new_db_object.save()
 
-    return HttpResponse(request, '')
+    return HttpResponse(request, status=204)
