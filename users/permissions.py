@@ -1,3 +1,5 @@
+from django.http import JsonResponse
+
 from .exceptions import UserDoesntHaveEnoughPermissions
 from .enums import UserTypeEnum
 from .models import UserProfile
@@ -21,7 +23,7 @@ def project_permissions_required(permissions: list):
                    current_user_permissions for require_perm in permissions):
                 result = function(*args, **kwargs)
             else:
-                raise UserDoesntHaveEnoughPermissions("You don't have enough permissions.")
+                return JsonResponse({"message": "У вас недостаточно прав для этого действия."})
             return result
         return wrapper
     return real_decorator

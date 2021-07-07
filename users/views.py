@@ -1,5 +1,8 @@
+import json
+
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render
+from django.http import JsonResponse
 from django.contrib.auth.models import User
 
 from .exceptions import UserAlreadyExistsException, UserNotFoundException
@@ -7,26 +10,17 @@ from .models import UserProfile
 from .forms import RegisterForm, LoginForm
 from .enums import UserTypeEnum
 
-import json
-
 
 can_edit_perm = [i.value for i in UserTypeEnum if i.value <= 2]
 
 
 def register_view(request):
     if request.method == 'POST':
-        print(json.loads(request.body))
         form = RegisterForm(json.loads(request.body))
-        print(form.is_valid())
         if form.is_valid():
-            print("TRUe")
             username = form.cleaned_data.get('username')
-            email = form.cleaned_data.get('email')
-            if not form.check_user_email():
-                user_profile = UserProfile.objects.filter(email__iexact=email)
-                if user_profile is not None:
-                    UserAlreadyExistsException('User with this username is already exists. Try another one.')
-
+            if not form.check_user_email() \
+                    and not form.check_user_phone_number() and not form.validate_user():
                 user_object = User.objects.create_user(username=username, password=form.cleaned_data.get('password'))
                 user_object.save()
                 new_profile_user = UserProfile.objects.create(
@@ -35,13 +29,14 @@ def register_view(request):
                     firstname=form.cleaned_data.get('firstname'),
                     lastname=form.cleaned_data.get('lastname'),
                     middlename=form.cleaned_data.get('middlename'),
-                    # birth_date=form.cleaned_data.get('birth_date'),
+                    birth_date=form.cleaned_data.get('birth_date'),
+                    phone_number=form.cleaned_data.get('phone_number'),
+                    department=form.cleaned_data.get('department'),
+                    personnel_number=form.cleaned_data.get('personnel_number'),
                     user_type=form.cleaned_data.get('user_type'),
                 )
-                new_profile_user.save()
 
-                created_user = UserProfile.objects.filter(email__iexact=email)
-                print(created_user)
+                new_profile_user.save()
     else:
         form = RegisterForm()
 
@@ -54,16 +49,12 @@ def login_view(request):
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            print(username, password)
-            print(User.objects.filter(username=username))
             user = authenticate(request, username=username, password=password)
-            print(user)
             if user is not None:
-                print(user)
                 login(request, user)
-                print("Successful")
+                return JsonResponse({"logged_in_user": user})
             else:
-                raise UserNotFoundException("User not found")
+                return JsonResponse({'message': 'Неверный логин или пароль.'})
     else:
         form = LoginForm()
 

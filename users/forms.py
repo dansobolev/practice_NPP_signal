@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django import forms
+from django.http import JsonResponse
 
 from .exceptions import UserAlreadyExistsException, UserWithThisEmailAlreadyExistsException
 from .models import UserProfile
@@ -14,13 +15,18 @@ class RegisterForm(forms.Form):
     firstname = forms.CharField()
     lastname = forms.CharField()
     middlename = forms.CharField()
+    birth_date = forms.DateField()
+    phone_number = forms.CharField()
+    department = forms.CharField()
+    personnel_number = forms.IntegerField()
     user_type = forms.CharField()
 
+    # TODO: протестировать
     def validate_user(self):
         username = self.cleaned_data.get('username')
         user = User.objects.filter(username__iexact=username)
         if user is not None:
-            raise UserAlreadyExistsException('User with this username is already exists. Try another one.')
+            return JsonResponse({'message': 'Пользователь с таким никнеймом уже существует.'})
 
     def check_user_email(self):
         email = self.cleaned_data.get('email')
@@ -29,7 +35,17 @@ class RegisterForm(forms.Form):
         except UserProfile.DoesNotExist:
             print("User not found")
         except UserProfile.MultipleObjectsReturned:
-            raise UserWithThisEmailAlreadyExistsException('User with this email is already exists')
+            return JsonResponse({'message': 'Пользователь с таким email уже существует.'})
+
+    # TODO: протестировать
+    def check_user_phone_number(self):
+        phone_number = self.cleaned_data.get('phone_number')
+        try:
+            UserProfile.objects.filter(phone_number__iexact=phone_number).get()
+        except UserProfile.DoesNotExist:
+            print("User not found")
+        except UserProfile.MultipleObjectsReturned:
+            return JsonResponse({'message': 'Пользователь с таким номером телефона уже существует.'})
 
 
 class LoginForm(forms.Form):
