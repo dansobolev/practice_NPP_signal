@@ -20,45 +20,7 @@ $(document).ready(function(){
         });
     });
 });
-(function($) {
-    if (!$.setCookie) {
-        $.extend({
-            setCookie: function(c_name, value, exdays) {
-                try {
-                    if (!c_name) return false;
-                    var exdate = new Date();
-                    exdate.setDate(exdate.getDate() + exdays);
-                    var c_value = escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
-                    document.cookie = c_name + "=" + c_value;
-                }
-                catch(err) {
-                    return false;
-                };
-                return true;
-            }
-        });
-    };
-    if (!$.getCookie) {
-        $.extend({
-            getCookie: function(c_name) {
-                try {
-                    var i, x, y,
-                        ARRcookies = document.cookie.split(";");
-                    for (i = 0; i < ARRcookies.length; i++) {
-                        x = ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
-                        y = ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
-                        x = x.replace(/^\s+|\s+$/g,"");
-                        if (x == c_name) return unescape(y);
-                    };
-                }
-                catch(err) {
-                    return false;
-                };
-                return false;
-            }
-        });
-    };
-})(jQuery);
+
 let enterData = new Object();
 function enter(){
     login = (document.querySelector('#authlogin')).value;
@@ -68,26 +30,10 @@ function enter(){
 
     $.ajax({
         type: "POST",
-        url: "http://127.0.0.1:8000/save-data/",
+        contentType: 'application/json; charset=utf-8',
+        url: "http://127.0.0.1:8000/users/login/",
+        processData: false,
         data: JSON.stringify(regData),
-        type: 'JSON',
-        success: function(response){
-            $.setCookie("userid", response);
-        }
       });
-}
 
-$(document).ready(function(){
-    savedId = $.getCookie("nameOfCookie");
-    if(savedId != ''){
-        $.ajax({
-            type: "POST",
-            url: "http://127.0.0.1:8000/save-data/",
-            data: JSON.stringify(savedId),
-            type: 'JSON',
-//            success: function(response){
-//                $.setCookie("userid", response);
-//            }
-        });
-    }
-})
+}

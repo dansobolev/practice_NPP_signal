@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 
 from .exceptions import UserDoesntHaveEnoughPermissions
 from .enums import UserTypeEnum
+from .models import UserProfile
 
 
 class ProjectPermissions:
@@ -15,8 +16,9 @@ def project_permissions_required(permissions: list):
     """
     def real_decorator(function):
         def wrapper(*args, **kwargs):
-            current_user = kwargs['request'].user
-            current_user_permissions = get_current_user_permissions(current_user)
+            current_user = args[0].user
+            get_user_profile = UserProfile.objects.get(id=current_user.id)
+            current_user_permissions = get_current_user_permissions(get_user_profile)
             if any(require_perm.startswith(user_perm) for user_perm in
                    current_user_permissions for require_perm in permissions):
                 result = function(*args, **kwargs)

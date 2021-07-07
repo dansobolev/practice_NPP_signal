@@ -24,28 +24,26 @@ let regData = new Object();
 
 function sendRegData(){
     userName = (document.querySelector('#regname')).value;
-    serSurname = (document.querySelector('#regsurname')).value;
+    userSurname = (document.querySelector('#regsurname')).value;
     userPatronymic = (document.querySelector('#regpatronymic')).value;
+    userEmail = (document.querySelector('#regemail')).value;
     userUsername = (document.querySelector('#regusername')).value;
     userPassword = (document.querySelector('#regpass')).value;
-    userBday = (document.querySelector('#regbday')).value;
     userPost = (document.querySelector('#regpost')).value;
-    regData['name'] = userName;
-    regData['surname'] = userSurname;
-    regData['patronymic'] = userPatronymic;
+    regData['firstname'] = userName;
+    regData['lastname'] = userSurname;
+    regData['middlename'] = userPatronymic;
+    regData['email'] = userEmail;
     regData['username'] = userUsername;
-    regData['userpassword'] = userPassword;
-    regData['bday'] = userBday;
-    regData['post'] = userPost;
-
+    regData['password'] = userPassword;
+    regData['user_type'] = userPost;
 
     $.ajax({
-        type: "POST",
-        url: "http://127.0.0.1:8000/users/register/",
-        data: JSON.stringify(regData),
-        type: 'JSON',
-        success: function(response){
-            console.log(response);
-        }
-      });
+    url: 'http://127.0.0.1:8000/users/register/',
+    type: 'POST',
+    contentType: 'application/json; charset=utf-8',
+    processData: false,
+    data: JSON.stringify(regData),
+    });
+
 }

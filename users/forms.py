@@ -14,7 +14,7 @@ class RegisterForm(forms.Form):
     firstname = forms.CharField()
     lastname = forms.CharField()
     middlename = forms.CharField()
-    user_type = forms.IntegerField()
+    user_type = forms.CharField()
 
     def validate_user(self):
         username = self.cleaned_data.get('username')

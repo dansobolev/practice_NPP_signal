@@ -7,14 +7,19 @@ from .models import UserProfile
 from .forms import RegisterForm, LoginForm
 from .enums import UserTypeEnum
 
+import json
+
 
 can_edit_perm = [i.value for i in UserTypeEnum if i.value <= 2]
 
 
 def register_view(request):
     if request.method == 'POST':
-        form = RegisterForm(request.POST)
+        print(json.loads(request.body))
+        form = RegisterForm(json.loads(request.body))
+        print(form.is_valid())
         if form.is_valid():
+            print("TRUe")
             username = form.cleaned_data.get('username')
             email = form.cleaned_data.get('email')
             if not form.check_user_email():
@@ -35,20 +40,12 @@ def register_view(request):
                 )
                 new_profile_user.save()
 
-                if new_profile_user.user_type in can_edit_perm:
-                    new_profile_user.user_permission.set(
-                        ['signal_app.change_assembly', 'signal_app.view_assembly',
-                         'signal_app.change_baseproduct', 'signal_app.view_baseproduct'])
-                else:
-                    new_profile_user.user_permission.set(
-                        ['signal_app.view_assembly', 'signal_app.view_baseproduct'])
-
                 created_user = UserProfile.objects.filter(email__iexact=email)
                 print(created_user)
     else:
         form = RegisterForm()
 
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'registration.html', {'form': form})
 
 
 def login_view(request):

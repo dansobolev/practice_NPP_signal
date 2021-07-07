@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Регистрация</title>
-    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 </head>
 <body>
     <div class = "registration">
@@ -21,6 +21,10 @@
                 <input id = "regpatronymic">
             </div>
             <div class = "registration__item">
+                <div class = "registration__item__text">Email</div>
+                <input id = "regemail">
+            </div>
+            <div class = "registration__item">
                 <div class = "registration__item__text">Логин</div>
                 <input id = "regusername">
             </div>
@@ -29,10 +33,6 @@
                 <input id = "regpass">
             </div>
 
-            <div class = "registration__item">
-                <div class = "registration__item__text">Дата рождения</div>
-                <input type="date" id = "regbday">
-            </div>
             <div class = "registration__item">
                 <div class = "registration__item__text">Должность</div>
                 <select id = "regpost">
@@ -50,5 +50,5 @@
     </div>
 </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <script type = "text/javascript" src = "../static/js/registration.js"></script>
+    <script type = "text/javascript" src = "/static/js/registration.js"></script>
 </html>
