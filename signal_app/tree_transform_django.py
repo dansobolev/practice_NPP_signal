@@ -52,9 +52,9 @@ def bd_to_dict(assembly, basep, k=0, descs_lst=None):
     return d
 
 
-def find_path(k, ancs_lst, descs_lst):
+def find_path(k, ancs_lst):
     if ancs_lst[k] != -1:
-        return [k] + find_path(ancs_lst[k], ancs_lst, descs_lst)
+        return [k] + find_path(ancs_lst[k], ancs_lst)
     else:
         return [k]
 
@@ -80,7 +80,7 @@ def add_edge(id, name, vhod, type, product_dict, ancestors_list, descendants_lis
     # Добавление вершины в словарь изделия
     prod_dict = product_dict.copy()
     t = prod_dict
-    path = list(reversed(find_path(k, ancs_lst, descs_lst)))[1:-1]
+    path = list(reversed(find_path(k, ancs_lst)))[1:-1]
     for i in path:
         j = list(map(lambda x: p_id_dict[x['id']], t['sub_assembly'])).index(i)
         t = t['sub_assembly'][j]
@@ -153,7 +153,7 @@ def delete_edge(id, type, product_dict, ancs_lst, descs_lst, id_dict):
     k = id_dict[id]  # Номер удаляемой вершины
     prod_dict = product_dict.copy()
     t = prod_dict
-    path = list(reversed(find_path(k, ancs_lst, descs_lst)))[1:]
+    path = list(reversed(find_path(k, ancs_lst)))[1:]
     for i in path[:-1]:
         j = list(map(lambda x: id_dict[x['id']], t['sub_assembly'])).index(i)
         t = t['sub_assembly'][j]
@@ -183,7 +183,7 @@ def change_edge(id, type, product_dict, ancs_lst, descs_lst, id_dict, id_c, name
     k = id_dict[id]  # Номер изменяемой вершины
     prod_dict = product_dict.copy()
     t = prod_dict
-    path = list(reversed(find_path(k, ancs_lst, descs_lst)))[1:]
+    path = list(reversed(find_path(k, ancs_lst)))[1:]
     for i in path[:-1]:
         j = list(map(lambda x: id_dict[x['id']], t['sub_assembly'])).index(i)
         t = t['sub_assembly'][j]
