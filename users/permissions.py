@@ -1,5 +1,3 @@
-from django.contrib.auth.models import User
-
 from .exceptions import UserDoesntHaveEnoughPermissions
 from .enums import UserTypeEnum
 from .models import UserProfile
@@ -29,7 +27,7 @@ def project_permissions_required(permissions: list):
     return real_decorator
 
 
-def get_current_user_permissions(user: User):
+def get_current_user_permissions(user: UserProfile):
     permissions = []
 
     if user.user_type in [UserTypeEnum.LEAD_DESIGNER.value,
