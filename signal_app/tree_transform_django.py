@@ -143,10 +143,10 @@ def dict_to_descs_lst(product_dicts, edge_c=1, id_dict=None):
 # TODO: Реализуй удаление через формирование словаря и всего остального по готовой таблице
 def delete_edge(id, type, product_dict, ancs_lst, descs_lst, id_dict):
     '''
-    param: k - Номер удаляемой вершины
+    param: type - Тип удаляемой вершины
     param: product_dict - Словарь изделия
-    param: ancestors_list - Список непосредственных предков дерева
-    param: descendants_list - Список непосредственных потомков дерева
+    param: ancs_lst - Список непосредственных предков дерева
+    param: descs_lst - Список непосредственных потомков дерева
     param: id_dict - Отображение (дец. номер -> номер вершины)
     '''
     # Удаление вершины из словаря
@@ -165,6 +165,46 @@ def delete_edge(id, type, product_dict, ancs_lst, descs_lst, id_dict):
         j = list(map(lambda x: id_dict[x['id']], t['sub_assembly'])).index(path[-1])
         deleted = t['sub_assembly'][j].copy()
         t['sub_assembly'].pop(j)
-    # Обновление информации о дереве
-    return dict_to_descs_lst([prod_dict])
+    return deleted
+
+
+def change_edge(id, type, product_dict, ancs_lst, descs_lst, id_dict, id_c, name_c, type_c):
+    '''
+    param: type - Тип удаляемой вершины
+    param: product_dict - Словарь изделия
+    param: ancs_lst - Список непосредственных предков дерева
+    param: descs_lst - Список непосредственных потомков дерева
+    param: id_dict - Отображение (дец. номер -> номер вершины)
+    param: id_c - Новый дец. номер вершины
+    param: name_c - Новый дец. номер вершины
+    param: type_c - Новый тип вершины (если изменяется деталь)
+    '''
+    # Изменение вершины
+    k = id_dict[id]  # Номер изменяемой вершины
+    prod_dict = product_dict.copy()
+    t = prod_dict
+    path = list(reversed(find_path(k, ancs_lst, descs_lst)))[1:]
+    for i in path[:-1]:
+        j = list(map(lambda x: id_dict[x['id']], t['sub_assembly'])).index(i)
+        t = t['sub_assembly'][j]
+    if type:  # Если type != 0, то зименяется деталь
+        j = list(map(lambda x: id_dict[x['id']], t['sub_details'])).index(path[-1])
+        changed = t['sub_details'][j].copy()  # TODO: Не используется
+        t['sub_details'][j]['id'] = id_c
+        t['sub_details'][j]['name'] = name_c
+        t['sub_details'][j]['type'] = type_c
+        # Изменение словаря
+        new_id_dict = id_dict.copy()
+        del new_id_dict[id]
+        new_id_dict[id_c] = k
+    else:
+        j = list(map(lambda x: id_dict[x['id']], t['sub_assembly'])).index(path[-1])
+        changed = t['sub_assembly'][j].copy()
+        t['sub_assembly'][j]['id'] = id_c
+        t['sub_assembly'][j]['name'] = name_c
+        # Изменение словаря
+        new_id_dict = id_dict.copy()
+        del new_id_dict[id]
+        new_id_dict[id_c] = k
     return prod_dict
+
