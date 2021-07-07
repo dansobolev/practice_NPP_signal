@@ -73,7 +73,7 @@ function enter(){
         url: "http://127.0.0.1:8000/users/login/",
         processData: false,
         data: JSON.stringify(regData),
-        success(function(response){
+        success: function(response){
             $.setCookie("userid", response)
         })
       });
