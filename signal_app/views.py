@@ -15,21 +15,21 @@ def index(request):
     return render(request, 'base.html')
 
 
-@login_required
-@project_permissions_required(
-    permissions=[ProjectPermissions.PERM_PROJECT_UPDATE, ProjectPermissions.PERM_PROJECT_READ]
-)
+# @login_required
+# @project_permissions_required(
+#    permissions=[ProjectPermissions.PERM_PROJECT_UPDATE, ProjectPermissions.PERM_PROJECT_READ]
+# )
 def show_tree(request):
     assembly = Assembly.objects.all()
     base_products = BaseProduct.objects.all()
 
     response = bd_to_dict(assembly, base_products)
 
-    return JsonResponse(response)
+    return JsonResponse(response)  # ожидает словарь
 
 
-@login_required
-@project_permissions_required(permissions=[ProjectPermissions.PERM_PROJECT_UPDATE])
+# @login_required
+# @project_permissions_required(permissions=[ProjectPermissions.PERM_PROJECT_UPDATE])
 def save_data(request):
     body = json.loads(request.body)
     type_ = TypeEnum(int(body['type']))
@@ -40,7 +40,7 @@ def save_data(request):
         try:
             Assembly.objects.filter(decimal_number=body['number']).get()
         except Assembly.DoesNotExist:
-            raise ObjectDoesNotExist("Object doesn't exist.")
+            return JsonResponse({"message": "Данная сборка отсутствует в базе. Перепроверьте данные."})
 
         new_db_object = BaseProduct.objects.create(
             decimal_number=body['number'],

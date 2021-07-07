@@ -10,3 +10,26 @@
     - `python manage.py loaddata fixtures/assemblies.json`
     - `python manage.py loaddata fixtures/baseProducts.json`
  - `python manage.py runserver` - для запуска проекта
+
+
+## Доступные URLs
+
+Method | URL | Description 
+------|------|-------
+GET | */admin* | Панель администратора
+
+## Пользователи
+
+Method | URL | Description 
+------|------|-------
+POST | *users/register* | Регистрация нового пользователя
+POST | *users/login* | Авторизация пользователя
+POST | *users/logout* | Разлогирование пользователя
+
+## Основные
+
+Method | URL | Description 
+------|------|-------
+GET | *assemblies* | Основное окно программы
+POST | *assemblies/show-tree* | Генерация дерева изделия
+POST | *assemblies/add-data* | Добавление новых компонентов

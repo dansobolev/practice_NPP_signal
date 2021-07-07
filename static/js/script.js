@@ -33,11 +33,12 @@ function sendDetail(){
     sendData['type'] = elemType;
     sendData['vhod'] = elemVhod;
     $.ajax({
-        type: "POST",
-        url: "http://127.0.0.1:8000/save-data/",
-        data: JSON.stringify(sendData),
-        type: 'JSON'
-      });    
+    url: 'http://127.0.0.1:8000/assemblies/add-data/',
+    type: 'POST',
+    contentType: 'application/json; charset=utf-8',
+    processData: false,
+    data: JSON.stringify(sendData),
+    });
 }
 
 
