@@ -17,8 +17,8 @@ def project_permissions_required(permissions: list):
         def wrapper(*args, **kwargs):
             current_user = kwargs['request'].user
             current_user_permissions = get_current_user_permissions(current_user)
-            if any(req_perm.startswith(user_perm) for user_perm in
-                   current_user_permissions for req_perm in permissions):
+            if any(require_perm.startswith(user_perm) for user_perm in
+                   current_user_permissions for require_perm in permissions):
                 result = function(*args, **kwargs)
             else:
                 raise UserDoesntHaveEnoughPermissions("You don't have enough permissions.")
