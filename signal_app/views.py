@@ -1,70 +1,60 @@
 import json
 
 from django.shortcuts import render, HttpResponse
-from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required,permission_required
 
 from .models import Assembly, BaseProduct
 from .enums import TypeEnum
 from .exceptions import ObjectDoesNotExist
-from .tree_transform_django import bd_to_dict
-from users.permissions import project_permissions_required, ProjectPermissions
+
+from .tree_transform_django import id_dict, ancestors_list, bd_to_dict
+from .trees_algorithms import flatten
+
+from pprint import pprint
 
 
 def index(request):
     return render(request, 'base.html')
 
 
-@login_required
-@project_permissions_required(permissions=[ProjectPermissions.PERM_PROJECT_UPDATE,
-                                           ProjectPermissions.PERM_PROJECT_READ])
 def show_tree(request):
     assembly = Assembly.objects.all()
-    base_products = BaseProduct.objects.all()
+    basep = BaseProduct.objects.all()
 
-    response = bd_to_dict(assembly, base_products)
+    # print(len(assembly))
+    pprint(bd_to_dict(assembly, basep))
 
-    return JsonResponse(response)
+    return render(request, 'base.html')
 
 
-@login_required
-@project_permissions_required(permissions=[ProjectPermissions.PERM_PROJECT_UPDATE])
 def save_data(request):
     body = json.loads(request.body)
-    type_ = TypeEnum(int(body['type']))
-    body.update({'type': type_.name.title()})
+    type_ = TypeEnum(int(body['type'])).name
+    body.update({'type': type_.title()})
 
     # if model != TypeEnum(type)
-    if type_.name != TypeEnum.ASSEMBLY.name:
+    if type_ != TypeEnum.ASSEMBLY.name:
         try:
-            Assembly.objects.filter(decimal_number=body['number']).get()
+            item_parent = Assembly.objects.filter(number=body['vhod']).get()
         except Assembly.DoesNotExist:
             raise ObjectDoesNotExist("Object doesn't exist.")
 
         new_db_object = BaseProduct.objects.create(
-            decimal_number=body['number'],
+            number=body['number'],
             name=body['name'],
-            entry_number=body['vhod'],
+            entry_number=item_parent.id,
             count_number=3,
-            product_type=type_.value
+            product_type=type_
         )
         new_db_object.save()
 
-        # test: retrieve just created object from db
-        created_object = BaseProduct.objects.get(decimal_number=body['number'])
-        print(created_object)
-
-        return HttpResponse(request, status=204)
-
-    new_db_object = Assembly.objects.create(
-        decimal_number=body['number'],
+    model = eval(body['type'])  # converts string type to Python Class object
+    new_db_object = model.objects.create(
+        number=body['number'],
         name=body['name'],
-        entry_number=body['vhod'],
+        entry_number=body['vhod']
     )
     new_db_object.save()
 
-    # test: retrieve just created object from db
-    created_object = Assembly.objects.get(decimal_number=body['number'])
-    print(created_object)
-
-    return HttpResponse(request, status=204)
+    return_new_object = model.objects.all().last()
+    print(return_new_object)
+    return HttpResponse(request, {'Hello': 'world'})

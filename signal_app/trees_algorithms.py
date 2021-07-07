@@ -23,14 +23,15 @@ def to_ancestors_list(desc_list):
 
 # Преобразование списка предков в список потомков
 def to_descendants_list(anc_list):
+    ancs_list = anc_list.copy()
     desc_list = []
-    n = len(anc_list) + 1
+    n = len(ancs_list) + 1
     for i in range(n):
-        n_descs = sum(map(lambda x: x == i, anc_list))
+        n_descs = sum(map(lambda x: x == i, ancs_list))
         i_descs = []
         for _ in range(n_descs):
-            indx = anc_list.index(i)
-            anc_list[indx] = -1
+            indx = ancs_list.index(i)
+            ancs_list[indx] = -1
             i_descs.append(indx)
         desc_list.append(i_descs)
     return desc_list
