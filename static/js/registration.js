@@ -27,19 +27,17 @@ function sendRegData(){
     userSurname = (document.querySelector('#regsurname')).value;
     userPatronymic = (document.querySelector('#regpatronymic')).value;
     userUsername = (document.querySelector('#regusername')).value;
-    userBday = (document.querySelector('#regbday')).value;
     userPost = (document.querySelector('#regpost')).value;
     regData['name'] = userName;
     regData['surname'] = userSurname;
     regData['patronymic'] = userPatronymic;
     regData['username'] = userUsername;
-    regData['bday'] = userBday;
     regData['post'] = userPost;
 
 
     $.ajax({
         type: "POST",
-        url: "http://127.0.0.1:8000/save-data/",
+        url: "http://127.0.0.1:8000/users/register/",
         data: JSON.stringify(regData),
         type: 'JSON',
         success: function(response){

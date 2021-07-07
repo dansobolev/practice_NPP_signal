@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django import forms
 
-from .exceptions import UserAlreadyExistsException, UserWithThisEmailAlreadyExistsException, UserNotFoundException
+from .exceptions import UserAlreadyExistsException, UserWithThisEmailAlreadyExistsException
 from .models import UserProfile
 
 User = get_user_model()
@@ -14,7 +14,6 @@ class RegisterForm(forms.Form):
     firstname = forms.CharField()
     lastname = forms.CharField()
     middlename = forms.CharField()
-    # birth_date = forms.CharField()
     user_type = forms.IntegerField()
 
     def validate_user(self):

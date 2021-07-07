@@ -36,11 +36,11 @@ def register_view(request):
                 new_profile_user.save()
 
                 if new_profile_user.user_type in can_edit_perm:
-                    new_profile_user.user.user_permission.set(
+                    new_profile_user.user_permission.set(
                         ['signal_app.change_assembly', 'signal_app.view_assembly',
                          'signal_app.change_baseproduct', 'signal_app.view_baseproduct'])
                 else:
-                    new_profile_user.user.user_permission.set(
+                    new_profile_user.user_permission.set(
                         ['signal_app.view_assembly', 'signal_app.view_baseproduct'])
 
                 created_user = UserProfile.objects.filter(email__iexact=email)
