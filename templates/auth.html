@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Вход</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+</head>
+<body>
+    <div class = "auth">
+        <div class = "auth__container">
+            <div class = "auth__box">
+                <div class = "auth__box__maintitle">Введите ваши данные для входа</div>
+                <div class = "auth__box__item">
+                    <div class = "auth__box__title">Логин</div>
+                    <input class = "auth__box__inp" id = "authlogin">
+                </div>
+                <div class = "auth__box__item">
+                    <div class = "auth__box__title">Пароль</div>
+                    <input type="password" class = "auth__box__inp" id = "authpass">
+                </div>
+                <button class = "auth__box__btn" onclick="enter()">Вход</button>
+            </div>
+        </div>
+    </div>
+</body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script type = "text/javascript" src = "../static/js/auth.js"></script>
+</html>
