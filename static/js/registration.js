@@ -27,12 +27,14 @@ function sendRegData(){
     userSurname = (document.querySelector('#regsurname')).value;
     userPatronymic = (document.querySelector('#regpatronymic')).value;
     userUsername = (document.querySelector('#regusername')).value;
+    userPassword = (document.querySelector('#regpass')).value;
     userBday = (document.querySelector('#regbday')).value;
     userPost = (document.querySelector('#regpost')).value;
     regData['name'] = userName;
     regData['surname'] = userSurname;
     regData['patronymic'] = userPatronymic;
     regData['username'] = userUsername;
+    regData['userpassword'] = userPassword;
     regData['bday'] = userBday;
     regData['post'] = userPost;
 
