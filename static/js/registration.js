@@ -27,6 +27,10 @@ function sendRegData(){
     userSurname = (document.querySelector('#regsurname')).value;
     userPatronymic = (document.querySelector('#regpatronymic')).value;
     userEmail = (document.querySelector('#regemail')).value;
+    userPhone = (document.querySelector('#regphone')).value;
+    userDep = (document.querySelector('#regphone')).value;
+    userBday = (document.querySelector('#regbday')).value;
+    userPersNum = (document.querySelector('#regpersonalnumber')).value;
     userUsername = (document.querySelector('#regusername')).value;
     userPassword = (document.querySelector('#regpass')).value;
     userPost = (document.querySelector('#regpost')).value;
@@ -37,6 +41,10 @@ function sendRegData(){
     regData['username'] = userUsername;
     regData['password'] = userPassword;
     regData['user_type'] = userPost;
+    regData['phone_number'] = userPhone;
+    regData['birth_date'] = userBday;
+    regData['department'] = userDep;
+    regData['personnel_number'] = userPersNum;
 
     $.ajax({
     url: 'http://127.0.0.1:8000/users/register/',
