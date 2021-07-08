@@ -80,7 +80,6 @@ WSGI_APPLICATION = 'npp_signal_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {'charset': 'utf8mb4'},  # TODO: разобраться с кодировкой
         'NAME': 'admin',
         'USER': 'root',
         'PASSWORD': 'root',

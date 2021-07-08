@@ -4,7 +4,7 @@ from .enums import TypeEnum
 
 
 class Assembly(models.Model):
-    decimal_number = models.CharField(max_length=50, null=True, help_text='Децимальный номер')
+    decimal_number = models.CharField(max_length=300, null=True, help_text='Децимальный номер')
     name = models.CharField(max_length=100, help_text='Наименование')
     entry_number = models.CharField(max_length=100, help_text='Входимость')
 
