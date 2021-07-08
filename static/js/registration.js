@@ -53,6 +53,9 @@ function sendRegData(){
         url: "http://127.0.0.1:8000/users/register/",
         processData: false,
         data: JSON.stringify(regData),
+        success: function(data){
+            console.log(data)
+        }
     });
 
 }
