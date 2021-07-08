@@ -22,6 +22,8 @@ def index(request):
 def show_tree(request):
     assembly = Assembly.objects.all()
     base_products = BaseProduct.objects.all()
+    if assembly.count() == 0 and base_products.count() == 0:
+        return JsonResponse({"": ""})
 
     response = bd_to_dict(assembly, base_products)
 
