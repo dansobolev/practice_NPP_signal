@@ -36,7 +36,7 @@ def bd_to_dict(assembly, basep, k=0, descs_lst=None):
     names = ['id', 'name', 'vhod', 'type']
     n = len(assembly)
     if k < n:
-        values = [assembly[k].decimal_number, assembly[k].name, assembly[k].entry_number, 'assembly']
+        values = [assembly[k].decimal_number, assembly[k].name, assembly[k].entry_number, 0]
     else:
         values = [basep[k-n].decimal_number, basep[k-n].name, basep[k-n].entry_number, basep[k-n].product_type]
     d = {n: v for n, v in zip(names, values)}
