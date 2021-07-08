@@ -16,7 +16,9 @@ can_edit_perm = [i.value for i in UserTypeEnum if i.value <= 2]
 
 def register_view(request):
     if request.method == 'POST':
-        form = RegisterForm(json.loads(request.body))
+        # print(request.body)
+        # form = RegisterForm(json.loads(request.body))
+        form = RegisterForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             if not form.check_user_email() \
@@ -40,7 +42,7 @@ def register_view(request):
     else:
         form = RegisterForm()
 
-    return render(request, 'registration.html', {'form': form})
+    return render(request, 'register.html', {'form': form})
 
 
 def login_view(request):
@@ -52,7 +54,11 @@ def login_view(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return JsonResponse({"logged_in_user": user})
+                user_profile = UserProfile.objects.filter(user=user)
+                return JsonResponse({"logged_in_user_id": user_profile.id,
+                                     "firstname": user_profile.firstname,
+                                     "lastname": user_profile.lastname,
+                                     "user_type": user_profile.user_type})
             else:
                 return JsonResponse({'message': 'Неверный логин или пароль.'})
     else:

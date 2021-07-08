@@ -24,8 +24,11 @@ class RegisterForm(forms.Form):
     # TODO: протестировать
     def validate_user(self):
         username = self.cleaned_data.get('username')
-        user = User.objects.filter(username__iexact=username)
-        if user is not None:
+        try:
+            User.objects.filter(username__iexact=username).get()
+        except User.DoesNotExist:
+            return False
+        except User.MultipleObjectsReturned:
             return JsonResponse({'message': 'Пользователь с таким никнеймом уже существует.'})
 
     def check_user_email(self):
@@ -33,7 +36,7 @@ class RegisterForm(forms.Form):
         try:
             UserProfile.objects.filter(email__iexact=email).get()
         except UserProfile.DoesNotExist:
-            print("User not found")
+            return False
         except UserProfile.MultipleObjectsReturned:
             return JsonResponse({'message': 'Пользователь с таким email уже существует.'})
 
@@ -43,7 +46,7 @@ class RegisterForm(forms.Form):
         try:
             UserProfile.objects.filter(phone_number__iexact=phone_number).get()
         except UserProfile.DoesNotExist:
-            print("User not found")
+            return False
         except UserProfile.MultipleObjectsReturned:
             return JsonResponse({'message': 'Пользователь с таким номером телефона уже существует.'})
 
