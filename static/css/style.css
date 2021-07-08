@@ -167,26 +167,34 @@ body {
 }
 .registration{
     width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 .registration__container{
-    margin-top: 100px;
-    width: 500px;
+    width: 325px;
+    height: 580px;
     display: flex;
     flex-direction: column;
 }
 .registration__item{
-    margin-top: 20px;
+    margin-top: 25px;
     display: flex;
 }
 .registration__item input{
-    padding-left: 10px;
-    border: 1px solid black;
+    border-bottom: 1px solid #4B4B4B;
     margin-left: auto;
-    width: 250px;
-    height: 30px;
-    font-size: 20px;
+    width: 100%;
+    padding-left: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    text-align: left;
+    color: #4B4B4B;
+
 }
 .registration{
     font-size: 20px;
@@ -195,8 +203,17 @@ body {
     margin-left: auto;
 }
 .registration__btn{
-    margin-top: 20px;
-    height: 40px;
+    width: max-content;
+    margin-top: 25px;
+    padding: 4px 117px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    text-align: center;
+    color: #FFFFFF;
+    background: #FF9494;
 }
 .auth{
     width: 100%;
@@ -206,41 +223,61 @@ body {
     align-items: center;
 }
 .auth__container{
-    width: 300px;
-    height: 230px;
+    width: 289px;
+    height: 305px;
     display: flex;
 
 }
 .auth__box{
-    width: 300px;
-    height: 230px;
+    width: 289px;
+    height: 305px;
     display: flex;
     flex-direction: column;
-    border: 2px solid #b3f8ff;
 }
 .auth__box__maintitle{
-    width: 297px;
-    height: 25px;
-    background: #b3f8ff;
-    font-size: 20px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 28px;
+    text-align: left;
+    color: #000000;
+}
+.auth__box__subtitle{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    text-align: left;
+    color: #000000;
 }
 .auth__box__item{
-    margin-left: 10px;
-    margin-top: 20px;
+    margin-left: 0px;
+    margin-top: 41px;
     display: flex;
     flex-direction: column;
 }
 .auth__box__inp{
-    padding-left: 10px;
-    width: 270px;
-    height: 35px;
-    border: 1px solid #b3f8ff;
-    font-size: 17px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    text-align: left;
+    color: #4B4B4B;
+    border-bottom: 1px solid #4B4B4B;
 }
 .auth__box__btn{
     width: max-content;
-    padding: 10px 50px;
-    background: #b3f8ff;
-    margin-left: 150px;
-    margin-top: 10px;
+    padding: 10px 124px;
+    background: #FF9494;
+    margin-top: 44px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    text-align: center;
+    color: #FFFFFF;
 }

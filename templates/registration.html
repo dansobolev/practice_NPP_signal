@@ -3,54 +3,58 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Регистрация</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico"/>
 </head>
 <body>
     <div class = "registration">
         <div class = "registration__container">
+            <div class = "auth__box__maintitle">Регистрация пользователя</div>
+        <div class = "auth__box__subtitle">Все поля обязательны к заполнению</div>
             <div class = "registration__item">
-                <div class = "registration__item__text">Имя</div>
-                <input id = "regname">
+                <div class = "registration__item__text"></div>
+                <input id = "regname" placeholder="Имя">
             </div>
             <div class = "registration__item">
-                <div class = "registration__item__text">Фамилия</div>
-                <input id = "regsurname">
+                <div class = "registration__item__text"></div>
+                <input id = "regsurname" placeholder="Фамилия">
             </div>
             <div class = "registration__item">
-                <div class = "registration__item__text">Отчество</div>
-                <input id = "regpatronymic">
+                <div class = "registration__item__text"></div>
+                <input id = "regpatronymic" placeholder="Отчество">
             </div>
             <div class = "registration__item">
-                <div class = "registration__item__text">Email</div>
-                <input id = "regemail">
+                <div class = "registration__item__text"></div>
+                <input id = "regemail" placeholder="Email">
             </div>
             <div class = "registration__item">
-                <div class = "registration__item__text">Дата рождения</div>
+                <div class = "registration__item__text"></div>
                 <input type="date" id="regbday"  min="1918-01-01" max="2015-12-31">
             </div>
             <div class = "registration__item">
-                <div class = "registration__item__text">Телефон</div>
-                <input id = "regphone">
+                <div class = "registration__item__text"></div>
+                <input id = "regphone" placeholder="Телефон">
             </div>
             <div class = "registration__item">
-                <div class = "registration__item__text">Отдел</div>
-                <input id = "regdepartment">
+                <div class = "registration__item__text"></div>
+                <input id = "regdepartment" placeholder="Отдел">
             </div>
             <div class = "registration__item">
-                <div class = "registration__item__text">Персональный номер</div>
-                <input id = "regpersonalnumber">
+                <div class = "registration__item__text"></div>
+                <input id = "regpersonalnumber" placeholder="Персональный номер">
             </div>
             <div class = "registration__item">
-                <div class = "registration__item__text">Логин</div>
-                <input id = "regusername">
+                <div class = "registration__item__text"></div>
+                <input id = "regusername" placeholder="Логин">
             </div>
             <div class = "registration__item">
-                <div class = "registration__item__text">Придумайте пароль</div>
-                <input id = "regpass">
+                <div class = "registration__item__text"></div>
+                <input type="password" id = "regpass" placeholder="Пароль">
             </div>
 
             <div class = "registration__item">
-                <div class = "registration__item__text">Должность</div>
+                <div class = "registration__item__text"></div>
                 <select id = "regpost">
                     <option value="0">Ведущий конструктор</option>
                     <option value="1">Ведущий технолог</option>
