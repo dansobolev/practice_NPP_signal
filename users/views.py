@@ -1,7 +1,7 @@
 import json
 
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 
@@ -16,9 +16,7 @@ can_edit_perm = [i.value for i in UserTypeEnum if i.value <= 2]
 
 def register_view(request):
     if request.method == 'POST':
-        # print(request.body)
-        # form = RegisterForm(json.loads(request.body))
-        form = RegisterForm(request.POST)
+        form = RegisterForm(json.loads(request.body))
         if form.is_valid():
             username = form.cleaned_data.get('username')
             if not form.check_user_email() \
@@ -39,6 +37,8 @@ def register_view(request):
                 )
 
                 new_profile_user.save()
+
+                JsonResponse({'status_code': 200, 'message': "User has been created"})
     else:
         form = RegisterForm()
 
@@ -47,14 +47,14 @@ def register_view(request):
 
 def login_view(request):
     if request.method == 'POST':
-        form = LoginForm(request.POST)
+        form = LoginForm(json.loads(request.body))
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                user_profile = UserProfile.objects.filter(user=user)
+                user_profile = UserProfile.objects.filter(user=user).get()
                 return JsonResponse({"logged_in_user_id": user_profile.id,
                                      "firstname": user_profile.firstname,
                                      "lastname": user_profile.lastname,

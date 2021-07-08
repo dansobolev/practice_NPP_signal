@@ -21,7 +21,6 @@ class RegisterForm(forms.Form):
     personnel_number = forms.IntegerField()
     user_type = forms.CharField()
 
-    # TODO: протестировать
     def validate_user(self):
         username = self.cleaned_data.get('username')
         try:
@@ -40,7 +39,6 @@ class RegisterForm(forms.Form):
         except UserProfile.MultipleObjectsReturned:
             return JsonResponse({'message': 'Пользователь с таким email уже существует.'})
 
-    # TODO: протестировать
     def check_user_phone_number(self):
         phone_number = self.cleaned_data.get('phone_number')
         try:

@@ -46,12 +46,13 @@ function sendRegData(){
     regData['department'] = userDep;
     regData['personnel_number'] = userPersNum;
 
+
     $.ajax({
-    url: 'http://127.0.0.1:8000/users/register/',
-    type: 'POST',
-    contentType: 'application/json; charset=utf-8',
-    processData: false,
-    data: JSON.stringify(regData),
+        type: "POST",
+        contentType: 'application/json; charset=utf-8',
+        url: "http://127.0.0.1:8000/users/register/",
+        processData: false,
+        data: JSON.stringify(regData),
     });
 
 }

@@ -60,12 +60,14 @@ $(document).ready(function(){
     });
 });
 
-let enterData = new Object();
+let regData = new Object();
 function enter(){
     login = (document.querySelector('#authlogin')).value;
     password = (document.querySelector('#authpass')).value;
-    enterData['login'] = login;
-    enterData['pass'] = password;
+    regData['username'] = login;
+    regData['password'] = password;
+
+    console.log(JSON.stringify(regData));
 
     $.ajax({
         type: "POST",
@@ -74,7 +76,8 @@ function enter(){
         processData: false,
         data: JSON.stringify(regData),
         success: function(response){
-            $.setCookie("userid", response)
+        //    $.setCookie("userid", response)
+            console.log(response);
         }
       });
 
