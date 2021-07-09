@@ -55,6 +55,9 @@ function sendRegData(){
         data: JSON.stringify(regData),
         success: function(data){
             console.log(data)
+            if(data.status_code = 200){
+                window.location.replace("../login/")
+            }
         }
     });
 
