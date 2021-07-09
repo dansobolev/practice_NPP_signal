@@ -281,6 +281,14 @@ body {
     text-align: center;
     color: #FFFFFF;
 }
+.auth__box__reg{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    color: #5A8CD8;
+}
 .auth__box__error{
     margin-top: 10px;
     font-family: Roboto;
