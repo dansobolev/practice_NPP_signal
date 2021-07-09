@@ -4,8 +4,8 @@ from PIL import Image
 import pytesseract
 
 
-img_path = r'Чертежи\Эталон\А4\взят из каких-то.jpg'
-# img_path = r'Чертежи\Эталон\А4\ЗНГ 05 - 27 - A _ Труба А4.jpg'
+# img_path = r'Чертежи\Эталон\А4\взят из каких-то.jpg'
+img_path = r'Чертежи\Эталон\А4\ЗНГ 05 - 27 - A _ Труба А4.jpg'
 img = Image.open(img_path)
 img_W, img_H = img.size
 # ---| get name |---
