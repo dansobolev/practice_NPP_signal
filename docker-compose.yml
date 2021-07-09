@@ -3,7 +3,6 @@ version: '3'
 services:
     web:
         build: .
-        entrypoint: "/signal_project/entrypoint.sh"
         volumes:
             - ./:/signal_project/
         ports:
