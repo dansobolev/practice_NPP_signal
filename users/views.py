@@ -54,10 +54,10 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 user_profile = UserProfile.objects.filter(user=user).get()
-                return JsonResponse({"logged_in_user_id": user_profile.id,
+                return JsonResponse({'status_code': 200, "logged_in_user_id": user_profile.id,
                                      "firstname": user_profile.firstname,
                                      "lastname": user_profile.lastname,
-                                     "user_type": user_profile.user_type})
+                                     "user_type": UserTypeEnum(user_profile.user_type).name})
             else:
                 return JsonResponse({'message': 'Неверный логин или пароль.'})
     else:
