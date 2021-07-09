@@ -81,7 +81,7 @@ function enter(){
                 messagePlace.innerHTML = response.message;
             }
             if(typeof response.status_code != "undefined"){
-               window.location.replace("../register")
+               window.location.replace("../../assemblies/")
             }
         }
       });
