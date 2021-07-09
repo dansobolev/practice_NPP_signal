@@ -37,8 +37,7 @@ def register_view(request):
                 )
 
                 new_profile_user.save()
-
-                JsonResponse({'status_code': 200, 'message': "User has been created"})
+                return JsonResponse({'status_code': 200, 'message': "User has been created"})
     else:
         form = RegisterForm()
 
