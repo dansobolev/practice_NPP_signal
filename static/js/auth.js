@@ -76,6 +76,7 @@ function enter(){
         data: JSON.stringify(regData),
         success: function(response){
         //    $.setCookie("userid", response)
+            console.log(response);
             messagePlace = document.querySelector('.auth__box__error');
             if(response.message != '' && typeof response.message != "undefined"){
                 messagePlace.innerHTML = response.message;
