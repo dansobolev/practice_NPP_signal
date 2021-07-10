@@ -1,6 +1,9 @@
 
 from .trees_algorithms import to_descendants_list
-from pprint import pprint
+import pandas as pd
+
+from openpyxl.styles import PatternFill
+from openpyxl import load_workbook
 
 
 # Отображение: дец. номер -> id (id - номер строки в БД)
@@ -36,7 +39,7 @@ def bd_to_dict(assembly, basep, k=0, descs_lst=None):
     names = ['id', 'name', 'vhod', 'type']
     n = len(assembly)
     if k < n:
-        values = [assembly[k].decimal_number, assembly[k].name, assembly[k].entry_number, 0]
+        values = [assembly[k].decimal_number, assembly[k].name, assembly[k].entry_number, 'assembly']
     else:
         values = [basep[k-n].decimal_number, basep[k-n].name, basep[k-n].entry_number, basep[k-n].product_type]
     d = {n: v for n, v in zip(names, values)}
@@ -52,9 +55,9 @@ def bd_to_dict(assembly, basep, k=0, descs_lst=None):
     return d
 
 
-def find_path(k, ancs_lst):
+def find_path(k, ancs_lst, descs_lst):
     if ancs_lst[k] != -1:
-        return [k] + find_path(ancs_lst[k], ancs_lst)
+        return [k] + find_path(ancs_lst[k], ancs_lst, descs_lst)
     else:
         return [k]
 
@@ -80,7 +83,7 @@ def add_edge(id, name, vhod, type, product_dict, ancestors_list, descendants_lis
     # Добавление вершины в словарь изделия
     prod_dict = product_dict.copy()
     t = prod_dict
-    path = list(reversed(find_path(k, ancs_lst)))[1:-1]
+    path = list(reversed(find_path(k, ancs_lst, descs_lst)))[1:-1]
     for i in path:
         j = list(map(lambda x: p_id_dict[x['id']], t['sub_assembly'])).index(i)
         t = t['sub_assembly'][j]
@@ -153,7 +156,7 @@ def delete_edge(id, type, product_dict, ancs_lst, descs_lst, id_dict):
     k = id_dict[id]  # Номер удаляемой вершины
     prod_dict = product_dict.copy()
     t = prod_dict
-    path = list(reversed(find_path(k, ancs_lst)))[1:]
+    path = list(reversed(find_path(k, ancs_lst, descs_lst)))[1:]
     for i in path[:-1]:
         j = list(map(lambda x: id_dict[x['id']], t['sub_assembly'])).index(i)
         t = t['sub_assembly'][j]
@@ -183,7 +186,7 @@ def change_edge(id, type, product_dict, ancs_lst, descs_lst, id_dict, id_c, name
     k = id_dict[id]  # Номер изменяемой вершины
     prod_dict = product_dict.copy()
     t = prod_dict
-    path = list(reversed(find_path(k, ancs_lst)))[1:]
+    path = list(reversed(find_path(k, ancs_lst, descs_lst)))[1:]
     for i in path[:-1]:
         j = list(map(lambda x: id_dict[x['id']], t['sub_assembly'])).index(i)
         t = t['sub_assembly'][j]
@@ -208,3 +211,38 @@ def change_edge(id, type, product_dict, ancs_lst, descs_lst, id_dict, id_c, name
         new_id_dict[id_c] = k
     return prod_dict
 
+
+def save_dict_to_excel(product_dict):
+    # Для работы функции необходим модуль openpyxl
+    tab = dict_to_table(product_dict)
+    cols = ['Децимальный номер', 'Наименование', 'Первичная входимость', 'Принадлежность']
+    df = pd.DataFrame(tab, columns=cols)
+    type_dict = {
+        0: 'Сборка',
+        1: 'Деталь',
+        2: 'Стандартное изделие',
+        3: 'Прочие изделия',
+        'assembly': 'Сборка'}
+    color_dict = {
+        'Сборка': '93C47D',
+        'Деталь': 'E2EFDA',
+        'Стандартное изделие': 'FCE4D6',
+        'Прочие изделия': 'D9E1F2'
+    }
+    df['Принадлежность'] = df['Принадлежность'].map(type_dict)
+    df.to_excel('output.xlsx', index=False)
+    wb = load_workbook('output.xlsx')
+    ws = wb['Sheet1']
+    # Форматирование
+    for cell in list(ws)[1]:
+        cell.fill = PatternFill(start_color='38761D',
+                                end_color='38761D',
+                                fill_type='solid')
+    for row in list(ws)[2:]:
+        color = color_dict[row[-1].value]
+        for cell in row:
+            cell.fill = PatternFill(start_color=color,
+                                    end_color=color,
+                                    fill_type='solid')
+    wb.save('Изделие1.xlsx')
+    return 'Saved'
