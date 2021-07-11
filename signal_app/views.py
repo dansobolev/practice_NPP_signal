@@ -1,3 +1,4 @@
+import ast
 import json
 
 from django.shortcuts import render, HttpResponse
@@ -80,7 +81,7 @@ def delete_entity(request):
     if 'decimal_number' in data:
         bd_model = 'Assembly' if item_type == TypeEnum.ASSEMBLY else 'BaseProduct'
         try:
-            assembly = eval(bd_model).objects.filter(decimal_number=data['decimal_number']).get()
+            assembly = ast.literal_eval(bd_model).objects.filter(decimal_number=data['decimal_number']).get()
             assembly.delete()
         except Exception as e:
             return JsonResponse({"error": "Cannot find item with provided decimal number."})
@@ -96,7 +97,7 @@ def edit_entity(request):
     if 'decimal_number' and 'fields_to_edit' in data:
         bd_model = 'Assembly' if item_type == TypeEnum.ASSEMBLY else 'BaseProduct'
         try:
-            item_to_edit = eval(bd_model).objects.filter(decimal_number=data['decimal_number']).get()
+            item_to_edit = ast.literal_eval(bd_model).objects.filter(decimal_number=data['decimal_number']).get()
         except Exception as e:
             return JsonResponse({"error": "Cannot find item with provided decimal number."})
         # блок выполнится, если не вызвалось исключение выше (айтем не был найден в БД)
