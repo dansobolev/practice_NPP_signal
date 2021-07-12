@@ -1,15 +1,11 @@
 import ast
+from datetime import datetime
 import json
 
-import csv
-from datetime import datetime
-
-import pandas as pd
-from django.contrib.auth.models import User
 from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-from openpyxl import load_workbook, Workbook
+from openpyxl import Workbook
 from openpyxl.styles import PatternFill
 
 from users.models import UserProfile
@@ -45,7 +41,7 @@ def index(request):
 def show_tree(request):
     response = bd_to_dict_helper(check_empty_bd=True)
 
-    return JsonResponse(response)  # ожидает словарь
+    return JsonResponse(response)
 
 
 @login_required
@@ -140,12 +136,13 @@ def edit_entity(request):
 
 
 @login_required
-@project_permissions_required(permissions=[ProjectPermissions.PERM_PROJECT_UPDATE])
+@project_permissions_required(permissions=[ProjectPermissions.PERM_PROJECT_READ])
 def export_page(request):
     try:
         current_user = UserProfile.objects.filter(user=request.user).get()
     except Exception as e:
         return JsonResponse({"error": "You are not logged in. Please, log in first"})
+
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename=Products(created at {date} by {user}).xlsx'.format(
         date=datetime.now().strftime('%Y-%m-%d'),
@@ -185,7 +182,6 @@ def export_page(request):
             cell.value = v
     # Форматирование
     for cell in list(ws)[1]:
-        print(cell.value)
         cell.fill = PatternFill(start_color='38761D',
                                 end_color='38761D',
                                 fill_type='solid')
