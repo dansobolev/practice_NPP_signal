@@ -38,7 +38,7 @@ def bd_to_dict(assembly, basep, k=0, descs_lst=None):
     names = ['id', 'name', 'vhod', 'type']
     n = len(assembly)
     if k < n:
-        values = [assembly[k].decimal_number, assembly[k].name, assembly[k].entry_number, 'assembly']
+        values = [assembly[k].decimal_number, assembly[k].name, assembly[k].entry_number, 0]
     else:
         values = [basep[k-n].decimal_number, basep[k-n].name, basep[k-n].entry_number, basep[k-n].product_type]
     d = {n: v for n, v in zip(names, values)}
@@ -143,8 +143,9 @@ def dict_to_descs_lst(product_dicts, edge_c=1, id_dict=None):
 
 
 # TODO: Реализуй удаление через формирование словаря и всего остального по готовой таблице
-def delete_edge(id, type, product_dict, ancs_lst, descs_lst, id_dict):
+def delete_edge(id, type, product_dict, ancs_lst, descs_lst, id_dict, assembly_length):
     '''
+    param: id - Децимальный номер добалвяеомго изделия
     param: type - Тип удаляемой вершины
     param: product_dict - Словарь изделия
     param: ancs_lst - Список непосредственных предков дерева
@@ -162,12 +163,20 @@ def delete_edge(id, type, product_dict, ancs_lst, descs_lst, id_dict):
     if type:  # Если type != 0, то удаляется деталь
         j = list(map(lambda x: id_dict[x['id']], t['sub_details'])).index(path[-1])
         deleted = t['sub_details'][j].copy()
-        t['sub_details'].pop(j)
+        # t['sub_details'].pop(j)
+        return [], dict_to_table(deleted)
     else:
         j = list(map(lambda x: id_dict[x['id']], t['sub_assembly'])).index(path[-1])
         deleted = t['sub_assembly'][j].copy()
-        t['sub_assembly'].pop(j)
-    return deleted
+        # t['sub_assembly'].pop(j)
+        tab = dict_to_table(deleted)
+        assembly_lst, detail_lst = [], []
+        for i in tab:
+            if i[-1]:
+                detail_lst.append(id_dict[i[0]] - assembly_length + 1)
+            else:
+                assembly_lst.append(i[0])
+        return assembly_lst, detail_lst  # assembly_lst - список децимальников (Assembly), list of ids (BaseProduct)
 
 
 def change_edge(id, type, product_dict, ancs_lst, descs_lst, id_dict, id_c, name_c, type_c):

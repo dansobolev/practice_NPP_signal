@@ -138,21 +138,14 @@ def edit_entity(request):
 @login_required
 @project_permissions_required(permissions=[ProjectPermissions.PERM_PROJECT_READ])
 def export_page(request):
-    try:
-        current_user = UserProfile.objects.filter(user=request.user).get()
-    except Exception as e:
-        return JsonResponse({"error": "You are not logged in. Please, log in first"})
+    current_user = UserProfile.objects.filter(user=request.user).get()
 
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename=Products(created at {date} by {user}).xlsx'.format(
         date=datetime.now().strftime('%Y-%m-%d'),
         user=current_user.firstname + current_user.lastname,
     )
-    # Для работы функции необходим модуль openpyxl
-    assembly = Assembly.objects.all()
-    base_products = BaseProduct.objects.all()
-
-    resp = bd_to_dict(assembly, base_products)
+    resp = bd_to_dict_helper(check_empty_bd=False)
     tab = dict_to_table(resp)
     type_dict = {
         0: 'Сборка',
