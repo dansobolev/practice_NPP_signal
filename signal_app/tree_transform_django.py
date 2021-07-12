@@ -179,17 +179,24 @@ def delete_edge(id, type, product_dict, ancs_lst, descs_lst, id_dict, assembly_l
         return assembly_lst, detail_lst  # assembly_lst - список децимальников (Assembly), list of ids (BaseProduct)
 
 
-def change_edge(id, type, product_dict, ancs_lst, descs_lst, id_dict, id_c, name_c, type_c):
+def change_edge(id, type, name, product_dict, ancs_lst, descs_lst, id_dict, id_c=None, name_c=None, type_c=None):
     '''
+    param: id - Децимальный номер изменяемой вершины
     param: type - Тип удаляемой вершины
     param: product_dict - Словарь изделия
     param: ancs_lst - Список непосредственных предков дерева
     param: descs_lst - Список непосредственных потомков дерева
     param: id_dict - Отображение (дец. номер -> номер вершины)
     param: id_c - Новый дец. номер вершины
-    param: name_c - Новый дец. номер вершины
+    param: name_c - Новое имя вершины
     param: type_c - Новый тип вершины (если изменяется деталь)
     '''
+    if id_c is None:
+        id_c = id
+    if name_c is None:
+        name_c = name
+    if type_c is None:
+        type_c = type
     # Изменение вершины
     k = id_dict[id]  # Номер изменяемой вершины
     prod_dict = product_dict.copy()
@@ -198,26 +205,27 @@ def change_edge(id, type, product_dict, ancs_lst, descs_lst, id_dict, id_c, name
     for i in path[:-1]:
         j = list(map(lambda x: id_dict[x['id']], t['sub_assembly'])).index(i)
         t = t['sub_assembly'][j]
-    if type:  # Если type != 0, то зименяется деталь
+    if type:  # Если type != 0, то изменяется деталь
         j = list(map(lambda x: id_dict[x['id']], t['sub_details'])).index(path[-1])
-        changed = t['sub_details'][j].copy()  # TODO: Не используется
-        t['sub_details'][j]['id'] = id_c
-        t['sub_details'][j]['name'] = name_c
-        t['sub_details'][j]['type'] = type_c
-        # Изменение словаря
-        new_id_dict = id_dict.copy()
-        del new_id_dict[id]
-        new_id_dict[id_c] = k
+        changed = t['sub_details'][j].copy()
+        return [], [{'name': changed['name'], 'entry_number': changed['vhod'],
+                'fields_to_edit': {'name': name_c, 'decimal_number': id_c, 'product_type': type_c}}]
     else:
+        print(t['sub_assembly'])
         j = list(map(lambda x: id_dict[x['id']], t['sub_assembly'])).index(path[-1])
         changed = t['sub_assembly'][j].copy()
-        t['sub_assembly'][j]['id'] = id_c
-        t['sub_assembly'][j]['name'] = name_c
-        # Изменение словаря
-        new_id_dict = id_dict.copy()
-        del new_id_dict[id]
-        new_id_dict[id_c] = k
-    return prod_dict
+        tab = [[changed['id'], changed['name'], changed['vhod'], changed['type']],
+               id_c, name_c, changed['vhod'], changed['type']]
+        # Изменение входимости потомков
+        # потомки в подсборках
+        assembl = []  # Что меняется
+        for i in changed['sub_assembly']:
+            assembl.append({'decimal_number': i['id'], 'fields_to_edit': {'entry_number': id_c}})
+        # Потомки в деталях
+        detail = []  # Что меняется
+        for i in changed['sub_details']:
+            detail.append({'name': i['name'], 'entry_number': i['vhod'], 'fields_to_edit': {'entry_number': id_c}})
+    return assembl, detail
 
 
 def save_dict_to_excel(product_dict):
