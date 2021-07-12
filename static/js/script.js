@@ -237,6 +237,7 @@ var recNum = 0;
 function addingData(data, recN, selfInDom){    
     recNum = recN + 1;
     if(data.type == '0'){
+        console.log("Sborka");
         var addButton = document.createElement('button');
         selfInDom.appendChild(addButton);
         addButton.className = "add__button";
@@ -245,25 +246,6 @@ function addingData(data, recN, selfInDom){
         img.setAttribute('src', '../static/img/add.svg');
         img.className = "add__button__img"
         addButton.appendChild(img);
-    }
-    for(i in data.sub_assembly){
-        curItem = data.sub_assembly[i];
-        var newSecondParent = document.createElement('div');             
-        newSecondParent.className = "second__parent";
-        newSecondParent.setAttribute("number", i);
-        newSecondParent.setAttribute("decnumber", curItem.id);
-        newSecondParent.setAttribute("type", curItem.type);
-        //document.querySelector(".parent").appendChild(newSecondParent);
-        selfInDom.appendChild(newSecondParent);
-        newSecondParent.innerHTML = '<div class = "second__parent__inner" ><div class = "second__parent__inner__text">'+ curItem.name +'</div><button class = "second__parent__edit-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/edit.png"></button><button class = "second__parent__delete-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/delete.png"></button></div>';
-        //newSecondParent.innerHTML = ''+ curItem.name +'';
-        
-        if( curItem.sub_assembly !=  ''){
-            addingData(curItem, recNum, newSecondParent);
-        }
-        if( curItem.sub_details !=  ''){
-            addingData(curItem, recNum, newSecondParent);
-        }
     }
     for(i in data.sub_details){
         curItem = data.sub_details[i];
@@ -276,6 +258,25 @@ function addingData(data, recN, selfInDom){
         selfInDom.appendChild(newSecondParent);
         newSecondParent.innerHTML = '<div class = "second__parent__inner" ><div class = "second__parent__inner__text">'+ curItem.name +'</div><button class = "second__parent__edit-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/edit.png"></button><button class = "second__parent__delete-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/delete.png"></button></div>';
         //newSecondParent.innerHTML = ''+ curItem.name +'';
+    }
+    for(i in data.sub_assembly){
+        curItem = data.sub_assembly[i];
+        var newSecondParent = document.createElement('div');
+        newSecondParent.className = "second__parent";
+        newSecondParent.setAttribute("number", i);
+        newSecondParent.setAttribute("decnumber", curItem.id);
+        newSecondParent.setAttribute("type", curItem.type);
+        //document.querySelector(".parent").appendChild(newSecondParent);
+        selfInDom.appendChild(newSecondParent);
+        newSecondParent.innerHTML = '<div class = "second__parent__inner" ><div class = "second__parent__inner__text">'+ curItem.name +'</div><button class = "second__parent__edit-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/edit.png"></button><button class = "second__parent__delete-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/delete.png"></button></div>';
+        //newSecondParent.innerHTML = ''+ curItem.name +'';
+
+        if( curItem.sub_assembly !=  ''){
+            addingData(curItem, recNum, newSecondParent);
+        }
+        if( curItem.sub_details !=  ''){
+            addingData(curItem, recNum, newSecondParent);
+        }
     }
 
 
