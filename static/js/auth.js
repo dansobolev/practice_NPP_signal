@@ -1,42 +1,32 @@
-(function($) {
-    if (!$.setCookie) {
-        $.extend({
-            setCookie: function(c_name, value, exdays) {
-                try {
-                    if (!c_name) return false;
-                    var exdate = new Date();
-                    exdate.setDate(exdate.getDate() + exdays);
-                    var c_value = escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
-                    document.cookie = c_name + "=" + c_value;
-                }
-                catch(err) {
-                    return false;
-                };
-                return true;
-            }
-        });
-    };
-    if (!$.getCookie) {
-        $.extend({
-            getCookie: function(c_name) {
-                try {
-                    var i, x, y,
-                        ARRcookies = document.cookie.split(";");
-                    for (i = 0; i < ARRcookies.length; i++) {
-                        x = ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
-                        y = ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
-                        x = x.replace(/^\s+|\s+$/g,"");
-                        if (x == c_name) return unescape(y);
-                    };
-                }
-                catch(err) {
-                    return false;
-                };
-                return false;
-            }
-        });
-    };
-})(jQuery);
+function createCookie(name, value, days) {
+    var expires;
+
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toGMTString();
+    } else {
+        expires = "";
+    }
+    document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/";
+}
+
+function readCookie(name) {
+    var nameEQ = encodeURIComponent(name) + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) === ' ')
+            c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0)
+            return decodeURIComponent(c.substring(nameEQ.length, c.length));
+    }
+    return null;
+}
+
+function eraseCookie(name) {
+    createCookie(name, "", -1);
+}
 $(document).ready(function(){
     function getCookie(c_name) {
         if(document.cookie.length > 0) {
@@ -75,7 +65,9 @@ function enter(){
         processData: false,
         data: JSON.stringify(regData),
         success: function(response){
-        //    $.setCookie("userid", response)
+            createCookie("user_firstname", response.firstname, 1);
+            createCookie("user_lastname", response.lastname, 1);
+            createCookie("user_type", response.user_type, 1);
             console.log(response);
             messagePlace = document.querySelector('.auth__box__error');
             if(response.message != '' && typeof response.message != "undefined"){
@@ -84,6 +76,7 @@ function enter(){
             if(typeof response.status_code != "undefined"){
                window.location.replace("../../assemblies/")
             }
+            //window.localStorage.setItem('name', response[''])
         }
       });
 

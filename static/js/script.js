@@ -1,3 +1,32 @@
+function createCookie(name, value, days) {
+    var expires;
+
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toGMTString();
+    } else {
+        expires = "";
+    }
+    document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/";
+}
+
+function readCookie(name) {
+    var nameEQ = encodeURIComponent(name) + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) === ' ')
+            c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0)
+            return decodeURIComponent(c.substring(nameEQ.length, c.length));
+    }
+    return null;
+}
+
+function eraseCookie(name) {
+    createCookie(name, "", -1);
+}
 $(document).ready(function(){
     function getCookie(c_name) {
         if(document.cookie.length > 0) {
@@ -277,6 +306,31 @@ function addingData(data, recN, selfInDom){
 
 }
 window.onload = function(){
+    document.querySelector('.index__personal__info__name').innerHTML = readCookie("user_firstname") + ' ' + readCookie("user_firstname");
+    userType = readCookie("user_type");
+    if(userType == 'LEAD_DESIGNER'){
+        post = 'Ведущий конструктор';
+    };
+    if(userType == 'LEAD_TECHNOLOGIST'){
+        post = 'Ведущий технолог';
+    };
+    if(userType == 'SOFTWARE_ENGINEER'){
+        post = 'Инженер программист IT-отдела';
+    };
+    if(userType == 'PRODUCTION_MANAGER'){
+        post = 'Диспетчер производства';
+    };
+    if(userType == 'LABOR_RATING_ENGINEER'){
+        post = 'Инженер по нормированию трудоемкости';
+    };
+    if(userType == 'FOREMAN'){
+        post = 'Мастер участка';
+    };
+    if(userType == 'TECHNICAL_DOCUMENTATION_OFFICER'){
+        post = 'Сотрудник отдела технической документации';
+    };
+    document.querySelector('.index__personal__info__dep').innerHTML = '' + post ;
+
     askForData();
 
 }
