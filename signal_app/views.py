@@ -98,13 +98,18 @@ def delete_entity(request):
         descs_list = to_descendants_list(ancs_list)
         id_d = id_dict(assembly, base_products)
 
-        items_to_delete = delete_edge(data['decimal_number'], item_type.value, product_dict, ancs_list, descs_list, id_d)
+        assemblies_to_delete, base_products_to_delete = delete_edge(
+            data['decimal_number'], item_type.value, product_dict, ancs_list, descs_list, id_d, len(assembly)
+        )
         try:
-            for item in items_to_delete:
-                item_decimal_number, item_type_ = item[0], item[2]
-                bd_model = 'Assembly' if item_type_ == 'assembly' else 'BaseProduct'
-                item_to_delete = ast.literal_eval(bd_model).objects.filter(decimal_number=item_decimal_number).get()
-                item_to_delete.delete()
+            # удаление сборок по децимальникам
+            for assembly_decimal in assemblies_to_delete:
+                assembly = Assembly.objects.filter(decimal_number=assembly_decimal).get()
+                assembly.delete()
+            # удаление подсборок по id в БД
+            for product_id in base_products_to_delete:
+                product = BaseProduct.objects.filter(id=product_id).get()
+                product.delete()
         except Exception as e:
             return JsonResponse({"error": "Cannot find item with provided decimal number."})
 
