@@ -52,6 +52,7 @@ function sendDetail(){
         elemDecnum = (document.querySelector('#inp__decnum')).value;
         elemVhod = (document.querySelector('#inp__vhod')).value;
         elemType = (document.querySelector('#inp__type')).value;
+        console.log(elemType);
         if(elemName != window.tecval_name){
             fieldEdited = 1;
             littleAr['name'] = elemName;
@@ -119,6 +120,7 @@ let jDataOld = {"type": "construct", "id": "\u042f\u0418\u0423\u0428.301446.006"
 function setButtons(){
     (document.querySelectorAll('.add__button')).forEach(function(e){
         $(e).click(function(){
+            $((document.querySelectorAll('.optional__adding__item'))[3]).css({"display": "flex"});
             document.querySelector('.optional__adding__title').innerHTML = "Добавление элемента";
             vhod = $(this).parent().attr("decnumber");
             document.querySelector('.optional__adding__item__button').innerHTML = "Добавить";
@@ -143,16 +145,16 @@ function setButtons(){
             vhod = ($(this).parent().parent().parent()).attr('decnumber');
             selfDec = ($(this).parent().parent()).attr('decnumber');
             type = ($(this).parent().parent()).attr('type');
-            if( type == 'assembly'){
+            if( type == '0'){
                 (document.querySelector('#inp__type')).value = 0;
             }
-            if( type == '0'){
+            if( type == '1'){
                 (document.querySelector('#inp__type')).value = 1;
             }
-            if( type == '1'){
+            if( type == '2'){
                 (document.querySelector('#inp__type')).value = 2;
             }
-            if( type == '2'){
+            if( type == '3'){
                 (document.querySelector('#inp__type')).value = 3;
             }
 
@@ -171,6 +173,7 @@ function setButtons(){
     });
     (document.querySelectorAll('.second__parent__delete-btn')).forEach(function(e){
         $(e).click(function(){
+            $((document.querySelectorAll('.optional__adding__item'))[3]).css({"display": "flex"});
             document.querySelector('.optional__adding__item__button').innerHTML = "Удалить";
             document.querySelector('.optional__adding__title').innerHTML = "Удаление элемента";
             name = $(this).parent().find('.second__parent__inner__text').html();
@@ -180,16 +183,16 @@ function setButtons(){
             vhod = ($(this).parent().parent().parent()).attr('decnumber');
             selfDec = ($(this).parent().parent()).attr('decnumber');
             type = ($(this).parent().parent()).attr('type');
-            if( type == 'assembly'){
+            if( type == '0'){
                 (document.querySelector('#inp__type')).value = 0;
             }
-            if( type == '0'){
+            if( type == '1'){
                 (document.querySelector('#inp__type')).value = 1;
             }
-            if( type == '1'){
+            if( type == '2'){
                 (document.querySelector('#inp__type')).value = 2;
             }
-            if( type == '2'){
+            if( type == '3'){
                 (document.querySelector('#inp__type')).value = 3;
             }
 
