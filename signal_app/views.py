@@ -103,13 +103,23 @@ def delete_entity(request):
         )
         try:
             # удаление сборок по децимальникам
-            for assembly_decimal in assemblies_to_delete:
-                assembly = Assembly.objects.filter(decimal_number=assembly_decimal).get()
-                assembly.delete()
-            # удаление подсборок по id в БД
-            for product_id in base_products_to_delete:
-                product = BaseProduct.objects.filter(id=product_id).get()
-                product.delete()
+            if assemblies_to_delete:
+                for assembly_decimal in assemblies_to_delete:
+                    assembly = Assembly.objects.filter(decimal_number=assembly_decimal).get()
+                    assembly.delete()
+                # удаление подсборок по id в БД
+                for product_id in base_products_to_delete:
+                    product = BaseProduct.objects.filter(id=product_id).get()
+                    product.delete()
+            else:
+                for item in base_products_to_delete:
+                    decimal_number = item[0]
+                    entry_number = item[3]
+                    product = BaseProduct.objects\
+                        .filter(decimal_number=decimal_number)\
+                        .filter(entry_number=entry_number)\
+                        .get()
+                    product.delete()
         except Exception as e:
             return JsonResponse({"error": "Cannot find item with provided decimal number."})
 
