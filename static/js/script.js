@@ -66,7 +66,6 @@ function sendDetail(){
         sendData['decimal_number'] = elemDecnum;
         sendData['type'] = elemType;
 
-        littleAr['field'] = fieldEdited;
         sendData['fieldstoedit'] = littleAr;
         $.ajax({
             url: 'http://127.0.0.1:8000/assemblies/edit-entity/',
@@ -97,10 +96,9 @@ function sendDetail(){
 
 function loadExcel(){
     $.ajax({
-        url: 'http://127.0.0.1:8000//assemblies/export-to-excel/',
+        url: 'http://127.0.0.1:8000/assemblies/export-to-excel/',
         type: 'GET',
         processData: false,
-        data: "200",
         success: function(response) {}
     })
 }

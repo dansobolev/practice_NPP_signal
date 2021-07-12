@@ -92,6 +92,7 @@ body {
 .index__personal__excel{
     margin-top: 20px;
     background: transparent;
+    color: #000000;
 }
 .optional{
     position: fixed;
