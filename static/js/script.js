@@ -41,7 +41,7 @@ function sendDetail(){
             processData: false,
             data: JSON.stringify(sendData),
             success: function(){
-                initData();
+                askForData();
             }
         });
     };
@@ -77,7 +77,7 @@ function sendDetail(){
             processData: false,
             data: JSON.stringify(sendData),
             success: function(){
-                initData();
+                askForData();
             }
         });
     };
@@ -95,7 +95,7 @@ function sendDetail(){
             processData: false,
             data: JSON.stringify(sendData),
             success: function(){
-                initData();
+                askForData();
             }
         });
     };
@@ -120,7 +120,7 @@ function setButtons(){
         $(e).click(function(){
             document.querySelector('.optional__adding__title').innerHTML = "Добавление элемента";
             vhod = $(this).parent().attr("decnumber");
-
+            document.querySelector('.optional__adding__item__button').innerHTML = "Добавить";
            //$(document.querySelector('.optional__adding__content')).toggleClass('show');
             //sendData["parent_dec"] = (e.parentElement).getAttribute('decnumber');
 
@@ -132,6 +132,7 @@ function setButtons(){
     });
     (document.querySelectorAll('.second__parent__edit-btn')).forEach(function(e){
         $(e).click(function(){
+            document.querySelector('.optional__adding__item__button').innerHTML = "Изменить";
             $((document.querySelectorAll('.optional__adding__item'))[3]).css({"display": "none"});
             document.querySelector('.optional__adding__title').innerHTML = "Изменение элемента";
             name = $(this).parent().find('.second__parent__inner__text').html();
@@ -169,6 +170,7 @@ function setButtons(){
     });
     (document.querySelectorAll('.second__parent__delete-btn')).forEach(function(e){
         $(e).click(function(){
+            document.querySelector('.optional__adding__item__button').innerHTML = "Удалить";
             document.querySelector('.optional__adding__title').innerHTML = "Удаление элемента";
             name = $(this).parent().find('.second__parent__inner__text').html();
             if( name == "undefined"){
@@ -229,7 +231,7 @@ function askForData(){
 var recNum = 0;
 function addingData(data, recN, selfInDom){    
     recNum = recN + 1;
-    if(data.type == 'assembly'){
+    if(data.type == '0'){
         var addButton = document.createElement('button');
         selfInDom.appendChild(addButton);
         addButton.className = "add__button";
