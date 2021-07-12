@@ -40,6 +40,9 @@ function sendDetail(){
             contentType: 'application/json; charset=utf-8',
             processData: false,
             data: JSON.stringify(sendData),
+            success: function(){
+                initData();
+            }
         });
     };
     if(typeOfSend == 'Изменение элемента'){
@@ -66,13 +69,16 @@ function sendDetail(){
         sendData['decimal_number'] = elemDecnum;
         sendData['type'] = elemType;
 
-        sendData['fieldstoedit'] = littleAr;
+        sendData['fields_to_edit'] = littleAr;
         $.ajax({
             url: 'http://127.0.0.1:8000/assemblies/edit-entity/',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             processData: false,
             data: JSON.stringify(sendData),
+            success: function(){
+                initData();
+            }
         });
     };
     if(typeOfSend == 'Удаление элемента'){
@@ -88,6 +94,9 @@ function sendDetail(){
             contentType: 'application/json; charset=utf-8',
             processData: false,
             data: JSON.stringify(sendData),
+            success: function(){
+                initData();
+            }
         });
     };
 
