@@ -205,6 +205,7 @@ function setButtons(){
 }
 
 function initData(jData){
+    document.querySelector('.parent').innerHTML = '';
     var newParent = document.createElement('div');
     newParent.className = "parent";
     // newParent.setAttribute("number", i);
