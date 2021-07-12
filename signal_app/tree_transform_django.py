@@ -1,6 +1,8 @@
-
 from .trees_algorithms import to_descendants_list
-from pprint import pprint
+import pandas as pd
+
+from openpyxl.styles import PatternFill
+from openpyxl import load_workbook
 
 
 # Отображение: дец. номер -> id (id - номер строки в БД)
@@ -93,10 +95,10 @@ def add_edge(id, name, vhod, type, product_dict, ancestors_list, descendants_lis
 
 
 def dict_to_table(product_dict):
-    table = [(product_dict['id'], product_dict['name'], product_dict['vhod'], product_dict['type'])]
+    table = [[product_dict['id'], product_dict['name'], product_dict['vhod'], product_dict['type']]]
     if product_dict['sub_details']:  # Если список деталей не пуст
         for i in product_dict['sub_details']: # TODO: Полагаем, что внутри деталей нет других деталей
-            table.append((i['id'], i['name'], i['vhod'], i['type']))
+            table.append([i['id'], i['name'], i['vhod'], i['type']])
     if product_dict['sub_assembly']:  # Если список подсборок не пуст
         for i in product_dict['sub_assembly']:
             table.extend(dict_to_table(i))
@@ -208,3 +210,38 @@ def change_edge(id, type, product_dict, ancs_lst, descs_lst, id_dict, id_c, name
         new_id_dict[id_c] = k
     return prod_dict
 
+
+def save_dict_to_excel(product_dict):
+    # Для работы функции необходим модуль openpyxl
+    tab = dict_to_table(product_dict)
+    cols = ['Децимальный номер', 'Наименование', 'Первичная входимость', 'Принадлежность']
+    df = pd.DataFrame(tab, columns=cols)
+    type_dict = {
+        0: 'Сборка',
+        1: 'Деталь',
+        2: 'Стандартное изделие',
+        3: 'Прочие изделия',
+        'assembly': 'Сборка'}
+    color_dict = {
+        'Сборка': '93C47D',
+        'Деталь': 'E2EFDA',
+        'Стандартное изделие': 'FCE4D6',
+        'Прочие изделия': 'D9E1F2'
+    }
+    df['Принадлежность'] = df['Принадлежность'].map(type_dict)
+    df.to_excel('output.xlsx', index=False)
+    wb = load_workbook('output.xlsx')
+    ws = wb['Sheet1']
+    # Форматирование
+    for cell in list(ws)[1]:
+        cell.fill = PatternFill(start_color='38761D',
+                                end_color='38761D',
+                                fill_type='solid')
+    for row in list(ws)[2:]:
+        color = color_dict[row[-1].value]
+        for cell in row:
+            cell.fill = PatternFill(start_color=color,
+                                    end_color=color,
+                                    fill_type='solid')
+    wb.save('Изделие1.xlsx')
+    return 'Saved'
