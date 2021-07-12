@@ -55,15 +55,13 @@ function sendDetail(){
         if(elemName != window.tecval_name){
             fieldEdited = 1;
             littleAr['name'] = elemName;
-            littleAr['name_old_name'] = window.tecval_name;
+            sendData['old_name'] = window.tecval_name;
         };
         if(elemDecnum != window.tecval_selfDec){
-            littleAr['decimal_number_old_name'] = window.tecval_selfDec;
             littleAr['decimal_number'] = elemDecnum;
             elemDecnum = window.tecval_selfDec
         };
         if(elemVhod != window.tecval_vhod){
-            littleAr['entry_number_old_name'] = window.tecval_vhod;
             littleAr['entry_number'] = elemVhod
         };
         if(elemType != window.tecval_type){
