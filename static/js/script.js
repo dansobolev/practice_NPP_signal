@@ -52,7 +52,6 @@ function sendDetail(){
         elemDecnum = (document.querySelector('#inp__decnum')).value;
         elemVhod = (document.querySelector('#inp__vhod')).value;
         elemType = (document.querySelector('#inp__type')).value;
-        console.log(elemType);
         if(elemName != window.tecval_name){
             fieldEdited = 1;
             littleAr['name'] = elemName;
@@ -140,7 +139,6 @@ function setButtons(){
             document.querySelector('.optional__adding__title').innerHTML = "Изменение элемента";
             name = $(this).parent().find('.second__parent__inner__text').html();
             if( name == "undefined"){
-                console.log($(this).parent().parent());
             }
             vhod = ($(this).parent().parent().parent()).attr('decnumber');
             selfDec = ($(this).parent().parent()).attr('decnumber');
@@ -178,7 +176,6 @@ function setButtons(){
             document.querySelector('.optional__adding__title').innerHTML = "Удаление элемента";
             name = $(this).parent().find('.second__parent__inner__text').html();
             if( name == "undefined"){
-                console.log($(this).parent().parent());
             }
             vhod = ($(this).parent().parent().parent()).attr('decnumber');
             selfDec = ($(this).parent().parent()).attr('decnumber');
@@ -222,12 +219,11 @@ function askForData(){
         url: 'http://127.0.0.1:8000/assemblies/show-tree/',
         type: 'GET',
         success: function(response) {
-            console.log(response);
             initData(response);
             setButtons();
         },
         error: function(){
-            console.log('Failed');
+            window.open('../users/login/');
         }
     })
 }
@@ -237,7 +233,6 @@ var recNum = 0;
 function addingData(data, recN, selfInDom){    
     recNum = recN + 1;
     if(data.type == '0'){
-        console.log("Sborka");
         var addButton = document.createElement('button');
         selfInDom.appendChild(addButton);
         addButton.className = "add__button";
