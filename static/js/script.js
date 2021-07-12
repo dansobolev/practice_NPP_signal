@@ -43,12 +43,31 @@ function sendDetail(){
         });
     };
     if(typeOfSend == 'Изменение элемента'){
+        fieldEdited = 0;
+        let littleAr = new Object();
         elemName = (document.querySelector('#inp__name')).value;
         elemDecnum = (document.querySelector('#inp__decnum')).value;
         elemVhod = (document.querySelector('#inp__vhod')).value;
         elemType = (document.querySelector('#inp__type')).value;
+        if(elemName != window.tecval_name){
+            fieldEdited = 1;
+            littleAr['name'] = elemName;
+        };
+        if(elemDecnum != window.tecval_selfDec){
+            littleAr['decimal_number'] = elemDecnum;
+            elemDecnum = window.tecval_selfDec
+        };
+        if(elemVhod != window.tecval_vhod){
+            littleAr['entry_number'] = elemVhod
+        };
+        if(elemType != window.tecval_type){
+        };
+
         sendData['decimal_number'] = elemDecnum;
         sendData['type'] = elemType;
+
+        littleAr['field'] = fieldEdited;
+        sendData['fieldstoedit'] = littleAr;
         $.ajax({
             url: 'http://127.0.0.1:8000/assemblies/edit-entity/',
             type: 'POST',
@@ -106,6 +125,7 @@ function setButtons(){
     });
     (document.querySelectorAll('.second__parent__edit-btn')).forEach(function(e){
         $(e).click(function(){
+            $((document.querySelectorAll('.optional__adding__item'))[3]).css({"display": "none"});
             document.querySelector('.optional__adding__title').innerHTML = "Изменение элемента";
             name = $(this).parent().find('.second__parent__inner__text').html();
             if( name == "undefined"){
@@ -131,6 +151,10 @@ function setButtons(){
             (document.querySelector('#inp__decnum')).value = selfDec;
             (document.querySelector('#inp__name')).value = name;
 
+            window.tecval_vhod = vhod;
+            window.tecval_selfDec = selfDec;
+            window.tecval_name = name;
+            window.tecval_type = type;
 
            //$(document.querySelector('.optional__adding__content')).toggleClass('show');
             //sendData["parent_dec"] = (e.parentElement).getAttribute('decnumber');
