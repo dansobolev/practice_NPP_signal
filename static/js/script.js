@@ -52,7 +52,6 @@ function sendDetail(){
         elemDecnum = (document.querySelector('#inp__decnum')).value;
         elemVhod = (document.querySelector('#inp__vhod')).value;
         elemType = (document.querySelector('#inp__type')).value;
-        console.log(elemType);
         if(elemName != window.tecval_name){
             fieldEdited = 1;
             littleAr['name'] = elemName;
@@ -140,7 +139,6 @@ function setButtons(){
             document.querySelector('.optional__adding__title').innerHTML = "Изменение элемента";
             name = $(this).parent().find('.second__parent__inner__text').html();
             if( name == "undefined"){
-                console.log($(this).parent().parent());
             }
             vhod = ($(this).parent().parent().parent()).attr('decnumber');
             selfDec = ($(this).parent().parent()).attr('decnumber');
@@ -178,7 +176,6 @@ function setButtons(){
             document.querySelector('.optional__adding__title').innerHTML = "Удаление элемента";
             name = $(this).parent().find('.second__parent__inner__text').html();
             if( name == "undefined"){
-                console.log($(this).parent().parent());
             }
             vhod = ($(this).parent().parent().parent()).attr('decnumber');
             selfDec = ($(this).parent().parent()).attr('decnumber');
@@ -222,12 +219,11 @@ function askForData(){
         url: 'http://127.0.0.1:8000/assemblies/show-tree/',
         type: 'GET',
         success: function(response) {
-            console.log(response);
             initData(response);
             setButtons();
         },
         error: function(){
-            console.log('Failed');
+            window.open('../users/login/');
         }
     })
 }
@@ -246,25 +242,6 @@ function addingData(data, recN, selfInDom){
         img.className = "add__button__img"
         addButton.appendChild(img);
     }
-    for(i in data.sub_assembly){
-        curItem = data.sub_assembly[i];
-        var newSecondParent = document.createElement('div');             
-        newSecondParent.className = "second__parent";
-        newSecondParent.setAttribute("number", i);
-        newSecondParent.setAttribute("decnumber", curItem.id);
-        newSecondParent.setAttribute("type", curItem.type);
-        //document.querySelector(".parent").appendChild(newSecondParent);
-        selfInDom.appendChild(newSecondParent);
-        newSecondParent.innerHTML = '<div class = "second__parent__inner" ><div class = "second__parent__inner__text">'+ curItem.name +'</div><button class = "second__parent__edit-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/edit.png"></button><button class = "second__parent__delete-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/delete.png"></button></div>';
-        //newSecondParent.innerHTML = ''+ curItem.name +'';
-        
-        if( curItem.sub_assembly !=  ''){
-            addingData(curItem, recNum, newSecondParent);
-        }
-        if( curItem.sub_details !=  ''){
-            addingData(curItem, recNum, newSecondParent);
-        }
-    }
     for(i in data.sub_details){
         curItem = data.sub_details[i];
         var newSecondParent = document.createElement('div');
@@ -276,6 +253,25 @@ function addingData(data, recN, selfInDom){
         selfInDom.appendChild(newSecondParent);
         newSecondParent.innerHTML = '<div class = "second__parent__inner" ><div class = "second__parent__inner__text">'+ curItem.name +'</div><button class = "second__parent__edit-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/edit.png"></button><button class = "second__parent__delete-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/delete.png"></button></div>';
         //newSecondParent.innerHTML = ''+ curItem.name +'';
+    }
+    for(i in data.sub_assembly){
+        curItem = data.sub_assembly[i];
+        var newSecondParent = document.createElement('div');
+        newSecondParent.className = "second__parent";
+        newSecondParent.setAttribute("number", i);
+        newSecondParent.setAttribute("decnumber", curItem.id);
+        newSecondParent.setAttribute("type", curItem.type);
+        //document.querySelector(".parent").appendChild(newSecondParent);
+        selfInDom.appendChild(newSecondParent);
+        newSecondParent.innerHTML = '<div class = "second__parent__inner" ><div class = "second__parent__inner__text">'+ curItem.name +'</div><button class = "second__parent__edit-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/edit.png"></button><button class = "second__parent__delete-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/delete.png"></button></div>';
+        //newSecondParent.innerHTML = ''+ curItem.name +'';
+
+        if( curItem.sub_assembly !=  ''){
+            addingData(curItem, recNum, newSecondParent);
+        }
+        if( curItem.sub_details !=  ''){
+            addingData(curItem, recNum, newSecondParent);
+        }
     }
 
 
