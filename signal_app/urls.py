@@ -8,5 +8,5 @@ urlpatterns = [
     path('add-data/', save_data),
     path('delete-entity/', delete_entity),
     path('edit-entity/', edit_entity),
-    path('export-page/', export_page),
+    path('export-to-excel/', export_page),
 ]

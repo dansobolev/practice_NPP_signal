@@ -89,7 +89,7 @@
     "fields": {
       "decimal_number": "",
       "name": "Винт М4Х6 DIN 7985",
-      "entry_number": "",
+      "entry_number": "ЯИУШ.301446.006",
       "count_number": 42,
       "product_type": 2
     }
@@ -100,7 +100,7 @@
     "fields": {
       "decimal_number": "",
       "name": "Винт М4х10 DIN 7985",
-      "entry_number": "",
+      "entry_number": "ЯИУШ.301446.006",
       "count_number": 46,
       "product_type": 2
     }
@@ -111,7 +111,7 @@
     "fields": {
       "decimal_number": "",
       "name": "Винт М5х12 DIN 7985",
-      "entry_number": "",
+      "entry_number": "ЯИУШ.301446.006",
       "count_number": 18,
       "product_type": 2
     }
@@ -124,7 +124,7 @@
     "fields": {
       "decimal_number": "",
       "name": "Винт М4Х6 DIN 7985",
-      "entry_number": "",
+      "entry_number": "ЯИУШ.301318.023",
       "count_number": 2,
       "product_type": 2
     }
@@ -135,7 +135,7 @@
     "fields": {
       "decimal_number": "",
       "name": "Втулка запрессовочная BSO-M3-6",
-      "entry_number": "",
+      "entry_number": "ЯИУШ.301318.023",
       "count_number": 2,
       "product_type": 2
     }
@@ -148,7 +148,7 @@
     "fields": {
       "decimal_number": "",
       "name": "Втулка запрессовочная BSO-M3-10 глухая",
-      "entry_number": "",
+      "entry_number": "ЯИУШ.301251.077-01",
       "count_number": 4,
       "product_type": 2
     }
@@ -159,7 +159,7 @@
     "fields": {
       "decimal_number": "",
       "name": "Шпилька запрессовочная РЕМ М4х12",
-      "entry_number": "",
+      "entry_number": "ЯИУШ.301251.077-01",
       "count_number": 2,
       "product_type": 2
     }
@@ -173,7 +173,7 @@
     "fields": {
       "decimal_number": "",
       "name": "Проушина замка SensLock SZST-21 (из комплекта Электронный замок SensLock SZST-21)",
-      "entry_number": "",
+      "entry_number": "ЯИУШ.301446.006",
       "count_number": 14,
       "product_type": 3
     }
@@ -182,9 +182,9 @@
     "model": "signal_app.BaseProduct",
     "pk": 16,
     "fields": {
-      "decimal_number": "ЯИУШ.754312.010",
+      "decimal_number": "",
       "name": "Шильдик",
-      "entry_number": "",
+      "entry_number": "ЯИУШ.301446.006",
       "count_number": 1,
       "product_type": 3
     }
@@ -195,7 +195,7 @@
     "fields": {
       "decimal_number": "",
       "name": "Электронный замок SensLock SZST-21",
-      "entry_number": "",
+      "entry_number": "ЯИУШ.301446.006",
       "count_number": 14,
       "product_type": 3
     }
