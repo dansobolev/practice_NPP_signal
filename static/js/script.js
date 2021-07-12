@@ -306,30 +306,37 @@ function addingData(data, recN, selfInDom){
 
 }
 window.onload = function(){
-    document.querySelector('.index__personal__info__name').innerHTML = readCookie("user_firstname") + ' ' + readCookie("user_firstname");
     userType = readCookie("user_type");
-    if(userType == 'LEAD_DESIGNER'){
-        post = 'Ведущий конструктор';
+    userFname = readCookie("user_firstname");
+    userLName = readCookie("user_lastname");
+
+    if(userType == null || userLName == null || userFname == null){
+        window.open('../users/login/');
+    }else{
+        if(userType == 'LEAD_DESIGNER'){
+            post = 'Ведущий конструктор';
+        };
+        if(userType == 'LEAD_TECHNOLOGIST'){
+            post = 'Ведущий технолог';
+        };
+        if(userType == 'SOFTWARE_ENGINEER'){
+            post = 'Инженер программист IT-отдела';
+        };
+        if(userType == 'PRODUCTION_MANAGER'){
+            post = 'Диспетчер производства';
+        };
+        if(userType == 'LABOR_RATING_ENGINEER'){
+            post = 'Инженер по нормированию трудоемкости';
+        };
+        if(userType == 'FOREMAN'){
+            post = 'Мастер участка';
+        };
+        if(userType == 'TECHNICAL_DOCUMENTATION_OFFICER'){
+            post = 'Сотрудник отдела технической документации';
+        };
+        document.querySelector('.index__personal__info__name').innerHTML = userFname + ' ' + userLName ;
+        document.querySelector('.index__personal__info__dep').innerHTML = '' + post ;
     };
-    if(userType == 'LEAD_TECHNOLOGIST'){
-        post = 'Ведущий технолог';
-    };
-    if(userType == 'SOFTWARE_ENGINEER'){
-        post = 'Инженер программист IT-отдела';
-    };
-    if(userType == 'PRODUCTION_MANAGER'){
-        post = 'Диспетчер производства';
-    };
-    if(userType == 'LABOR_RATING_ENGINEER'){
-        post = 'Инженер по нормированию трудоемкости';
-    };
-    if(userType == 'FOREMAN'){
-        post = 'Мастер участка';
-    };
-    if(userType == 'TECHNICAL_DOCUMENTATION_OFFICER'){
-        post = 'Сотрудник отдела технической документации';
-    };
-    document.querySelector('.index__personal__info__dep').innerHTML = '' + post ;
 
     askForData();
 
