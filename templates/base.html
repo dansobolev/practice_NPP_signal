@@ -7,36 +7,45 @@
     </head>
     <body>
         <div class = "index">
-            <div id = "nav"></div>
-            <div class = "optional">
-                <div class = "optional__img"></div>
-                <div class = "optional__adding">
-                    <div class = "optional__adding__content">
-                        <div class= "optional__adding__item">
-                            <div class= "optional__adding__item__title">Название</div>
-                            <input class= "optional__adding__item__inp" id = "inp__name"></input>
+            <div class = "index__personal">
+                <div class = "index__personal__info">
+                    <div class = "index__personal__info__name">Данизи</div>
+                </div>
+                <button class = "index__personal__excel">Выгрузить в excel</button>
+            </div>
+            <div class = "index__container">
+                <div id = "nav"></div>
+                <div class = "optional">
+                    <div class = "optional__img"></div>
+                    <div class = "optional__adding">
+                        <div class = "optional__adding__title">Ничего не выбрано</div>
+                        <div class = "optional__adding__content">
+                            <div class= "optional__adding__item">
+                                <div class= "optional__adding__item__title"></div>
+                                <input class= "optional__adding__item__inp" placeholder="Название" id = "inp__name"></input>
+                            </div>
+                            <div class= "optional__adding__item">
+                                <div class= "optional__adding__item__title"></div>
+                                <input class= "optional__adding__item__inp" placeholder="Децимальный номер" id = "inp__decnum"></input>
+                            </div>
+                            <div class= "optional__adding__item">
+                                <div class= "optional__adding__item__title"></div>
+                                <input class= "optional__adding__item__inp" placeholder="Входимость" id = "inp__vhod"></input>
+                            </div>
+                            <div class= "optional__adding__item">
+                                <div class= "optional__adding__item__title">Тип Изделия</div>
+                                <select class= "optional__adding__item__inp" id = "inp__type">
+                                    <option value = "0">Сборка</option>
+                                    <option value = "1">Деталь</option>
+                                    <option value = "2">Стандартные изделия</option>
+                                    <option value = "3">Прочие изделия</option>
+                                </select>
+                            </div>
+                            <div class= "optional__adding__item">
+                                <div class= "optional__adding__item__title"></div>
+                                <button class= "optional__adding__item__button" onclick = "sendDetail()">Отправить</button>
+                            </div>
                         </div>
-                        <div class= "optional__adding__item">
-                            <div class= "optional__adding__item__title">Децимальный номер</div>
-                            <input class= "optional__adding__item__inp" id = "inp__decnum"></input>
-                        </div>
-                        <div class= "optional__adding__item">
-                            <div class= "optional__adding__item__title">Входимость</div>
-                            <input class= "optional__adding__item__inp" id = "inp__vhod"></input>
-                        </div>
-                        <div class= "optional__adding__item">
-                            <div class= "optional__adding__item__title">Тип Изделия</div>
-                            <select class= "optional__adding__item__inp" id = "inp__type">
-                                <option value = "0">Сборка</option>
-                                <option value = "1">Деталь</option>
-                                <option value = "2">Стандартные изделия</option>
-                                <option value = "3">Прочие изделия</option>
-                            </select>
-                        </div>       
-                        <div class= "optional__adding__item">
-                            <div class= "optional__adding__item__title"></div>
-                            <button class= "optional__adding__item__button" onclick = "sendDetail()">Отправить</button>
-                        </div>                 
                     </div>
                 </div>
             </div>

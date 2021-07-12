@@ -75,30 +75,54 @@ body {
 .index{
     width: 100%;
     height: 100%;
-    display: flex;    
+    display: flex;
+    flex-direction: column;
+}
+.index__container{
+    width: 100%;
+    display: flex;
+}
+.index__personal{
+    display: flex;
+    flex-direction: column;
+    align-self: flex-end;
+    margin-right: 100px;
+    margin-top: 20px;
+}
+.index__personal__excel{
+    margin-top: 20px;
+    background: transparent;
 }
 .optional{
     position: fixed;
-    top: 20px;
+    top: 170px;
     right: 20px;
     width: 60%;
     height: 90%;
 }
 #nav{
-    margin-top: 20px;
+    margin-top: 100px;
     margin-left: 30px;
     width: 40%;
 }
 .optional__adding{
     width: 100%;
     height: 100%;
-    border: 2px solid black;
+    //border: 2px solid black;
     
 }
 .parent{
     cursor: pointer;
     display: flex;
     flex-direction: column;
+    position: relative;
+}
+.parent::before{
+    content: '';
+    position: absolute;
+    border-right: 1px solid grey;
+    height: 103%;
+    left: -5px;
 }
 .second__parent{
     margin-top: 10px;
@@ -106,12 +130,21 @@ body {
     flex-direction: column;
     cursor: pointer;
     margin-left: 20px;
+    position: relative;
+}
+.second__parent::before{
+    content: '';
+    position: absolute;
+    border-right: 1px solid grey;
+    height: 165%;
+    left: -5px;
 }
 /* .third__parent{
     cursor: pointer;
     margin-left: 20px;
 } */
 .add__button{
+    position: relative;
     margin-top: 5px;
     width: max-content;
     cursor: pointer;
@@ -120,7 +153,14 @@ body {
     flex-direction: row-reverse;
     background: transparent;
     align-items: center;
-
+}
+.add__button::before{
+    content: '';
+    position: absolute;
+    border-right: 1px solid grey;
+    height: 165%;
+    left: -5px;
+    top: -3px;
 }
 .add__button__img{
     margin-right: 10px;
@@ -133,8 +173,8 @@ body {
     display: flex;
     flex-direction: column;
     width: 500px;
-    opacity: 0;
-    z-index: -10;
+    //opacity: 0;
+    //z-index: -10;
 }
 .optional__adding__item{
     display: flex;
@@ -161,10 +201,10 @@ body {
     height: 40px;
     background: #ececec;
 }
-.show{
-    opacity: 1;
-    z-index: 1;
-}
+//.show{
+//    opacity: 1;
+//    z-index: 1;
+//}
 .registration{
     width: 100%;
     height: 100%;
@@ -298,4 +338,19 @@ body {
     line-height: 21px;
     text-align: center;
     color: #FF0000
+}
+.second__parent__edit-btn__img{
+    width: 16px;
+    height: 16px;
+}
+.second__parent__inner{
+    display: flex;
+}
+.second__parent__edit-btn{
+    margin-left: 10px;
+    background: transparent;
+}
+.second__parent__delete-btn{
+    margin-left: 10px;
+    background: transparent;
 }
