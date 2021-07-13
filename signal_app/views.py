@@ -40,7 +40,7 @@ def index(request):
 )
 def show_tree(request):
     response = bd_to_dict_helper(check_empty_bd=True)
-    print(response)
+
     return JsonResponse(response)
 
 
@@ -49,7 +49,6 @@ def show_tree(request):
 def save_data(request):
     body = json.loads(request.body)
     type_ = TypeEnum(int(body['type']))
-    print(body)
     body.update({'type': type_.name.title()})
 
     if type_.name != TypeEnum.ASSEMBLY.name:
@@ -67,10 +66,6 @@ def save_data(request):
         )
         new_db_object.save()
 
-        # test: retrieve just created object from db
-        created_object = BaseProduct.objects.get(decimal_number=body['number'])
-        print(created_object)
-
         return HttpResponse(request, status=204)
 
     new_db_object = Assembly.objects.create(
@@ -79,10 +74,6 @@ def save_data(request):
         entry_number=body['vhod'],
     )
     new_db_object.save()
-
-    # test: retrieve just created object from db
-    created_object = Assembly.objects.get(decimal_number=body['number'])
-    print(created_object)
 
     return JsonResponse({"status_code": 200, "message": "Item has been successfully added to DB"})
 

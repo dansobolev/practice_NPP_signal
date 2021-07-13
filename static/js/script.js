@@ -280,7 +280,12 @@ function addingData(data, recN, selfInDom){
         newSecondParent.setAttribute("type", curItem.type);
         //document.querySelector(".parent").appendChild(newSecondParent);
         selfInDom.appendChild(newSecondParent);
-        newSecondParent.innerHTML = '<div class = "second__parent__inner" ><div class = "second__parent__inner__text">'+ curItem.name +'</div><button class = "second__parent__edit-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/edit.png"></button><button class = "second__parent__delete-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/delete.png"></button></div>';
+        if(curItem.type == 0){
+            newSecondParent.innerHTML = '<div class = "second__parent__inner" ><img src = "../static/img/assembly.png"><div class = "second__parent__inner__text">' + curItem.name + ' ' + curItem.id + '</div><button class = "second__parent__edit-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/edit.png"></button><button class = "second__parent__delete-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/delete.png"></button></div>';
+        }
+        if(curItem.type == 1) {
+            newSecondParent.innerHTML = '<div class = "second__parent__inner" ><img src = "../static/img/detail.png"><div class = "second__parent__inner__text">' + curItem.name + ' ' + curItem.id + '</div><button class = "second__parent__edit-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/edit.png"></button><button class = "second__parent__delete-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/delete.png"></button></div>';
+        }
         //newSecondParent.innerHTML = ''+ curItem.name +'';
     }
     for(i in data.sub_assembly){
@@ -292,7 +297,13 @@ function addingData(data, recN, selfInDom){
         newSecondParent.setAttribute("type", curItem.type);
         //document.querySelector(".parent").appendChild(newSecondParent);
         selfInDom.appendChild(newSecondParent);
-        newSecondParent.innerHTML = '<div class = "second__parent__inner" ><div class = "second__parent__inner__text">'+ curItem.name +'</div><button class = "second__parent__edit-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/edit.png"></button><button class = "second__parent__delete-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/delete.png"></button></div>';
+        //newSecondParent.innerHTML = '<div class = "second__parent__inner" ><div class = "second__parent__inner__text">'+ curItem.name + ' ' + curItem.id + '</div><button class = "second__parent__edit-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/edit.png"></button><button class = "second__parent__delete-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/delete.png"></button></div>';
+        if(curItem.type == 0){
+            newSecondParent.innerHTML = '<div class = "second__parent__inner" ><img src = "../static/img/assembly.png"><div class = "second__parent__inner__text">' + curItem.name + ' ' + curItem.id + '</div><button class = "second__parent__edit-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/edit.png"></button><button class = "second__parent__delete-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/delete.png"></button></div>';
+        }
+        if(curItem.type == 1) {
+            newSecondParent.innerHTML = '<div class = "second__parent__inner" ><img src = "../static/img/detail.png"><div class = "second__parent__inner__text">' + curItem.name + ' ' + curItem.id + '</div><button class = "second__parent__edit-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/edit.png"></button><button class = "second__parent__delete-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/delete.png"></button></div>';
+        }
         //newSecondParent.innerHTML = ''+ curItem.name +'';
 
         if( curItem.sub_assembly !=  ''){
