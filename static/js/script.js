@@ -83,7 +83,6 @@ function sendDetail(){
         elemType = (document.querySelector('#inp__type')).value;
         if(elemName != window.tecval_name){
             littleAr['name'] = elemName;
-            sendData['old_name'] = window.tecval_name;
         };
         if(elemDecnum != window.tecval_selfDec){
             littleAr['decimal_number'] = elemDecnum;
@@ -97,6 +96,7 @@ function sendDetail(){
         sendData['decimal_number'] = elemDecnum;
         sendData['type'] = elemType;
         sendData['entry_number'] = window.tecval_vhod;
+        sendData['old_name'] = window.tecval_name;
         sendData['fields_to_edit'] = littleAr;
         $.ajax({
             url: 'http://127.0.0.1:8000/assemblies/edit-entity/',
