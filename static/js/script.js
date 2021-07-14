@@ -286,6 +286,12 @@ function addingData(data, recN, selfInDom){
         if(curItem.type == 1) {
             newSecondParent.innerHTML = '<div class = "second__parent__inner" ><img src = "../static/img/detail.png"><div class = "second__parent__inner__text">' + curItem.name + ' ' + curItem.id + '</div><button class = "second__parent__edit-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/edit.png"></button><button class = "second__parent__delete-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/delete.png"></button></div>';
         }
+        if(curItem.type == 2) {
+            newSecondParent.innerHTML = '<div class = "second__parent__inner" ><img src = "../static/img/standart.png"><div class = "second__parent__inner__text">' + curItem.name + ' ' + curItem.id + '</div><button class = "second__parent__edit-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/edit.png"></button><button class = "second__parent__delete-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/delete.png"></button></div>';
+        }
+        if(curItem.type == 3) {
+            newSecondParent.innerHTML = '<div class = "second__parent__inner" ><img src = "../static/img/other.png"><div class = "second__parent__inner__text">' + curItem.name + ' ' + curItem.id + '</div><button class = "second__parent__edit-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/edit.png"></button><button class = "second__parent__delete-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/delete.png"></button></div>';
+        }
         //newSecondParent.innerHTML = ''+ curItem.name +'';
     }
     for(i in data.sub_assembly){
@@ -304,6 +310,13 @@ function addingData(data, recN, selfInDom){
         if(curItem.type == 1) {
             newSecondParent.innerHTML = '<div class = "second__parent__inner" ><img src = "../static/img/detail.png"><div class = "second__parent__inner__text">' + curItem.name + ' ' + curItem.id + '</div><button class = "second__parent__edit-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/edit.png"></button><button class = "second__parent__delete-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/delete.png"></button></div>';
         }
+        if(curItem.type == 2) {
+            newSecondParent.innerHTML = '<div class = "second__parent__inner" ><img src = "../static/img/standart.png"><div class = "second__parent__inner__text">' + curItem.name + ' ' + curItem.id + '</div><button class = "second__parent__edit-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/edit.png"></button><button class = "second__parent__delete-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/delete.png"></button></div>';
+        }
+        if(curItem.type == 3) {
+            newSecondParent.innerHTML = '<div class = "second__parent__inner" ><img src = "../static/img/other.png"><div class = "second__parent__inner__text">' + curItem.name + ' ' + curItem.id + '</div><button class = "second__parent__edit-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/edit.png"></button><button class = "second__parent__delete-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/delete.png"></button></div>';
+        }
+
         //newSecondParent.innerHTML = ''+ curItem.name +'';
 
         if( curItem.sub_assembly !=  ''){
@@ -313,6 +326,19 @@ function addingData(data, recN, selfInDom){
             addingData(curItem, recNum, newSecondParent);
         }
     }
+}
+function logout(){
+    $.ajax({
+        url: 'http://127.0.0.1:8000/users/logout/',
+        type: 'GET',
+        processData: false,
+        success: function(response) {
+            window.open("http://127.0.0.1:8000/users/login/","_self");
+        }
+    })
+    eraseCookie("user_type");
+    eraseCookie("user_firstname");
+    eraseCookie("user_lastname");
 
 
 }
@@ -322,7 +348,7 @@ window.onload = function(){
     userLName = readCookie("user_lastname");
 
     if(userType == null || userLName == null || userFname == null){
-        window.open('../users/login/');
+        window.open("http://127.0.0.1:8000/users/login/","_self");
     }else{
         if(userType == 'LEAD_DESIGNER'){
             post = 'Ведущий конструктор';

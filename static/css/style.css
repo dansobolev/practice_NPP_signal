@@ -83,22 +83,58 @@ body {
     display: flex;
 }
 .index__personal{
+    position: fixed;
+    top: 20px;
     display: flex;
     flex-direction: column;
     align-self: flex-end;
     margin-right: 100px;
-    margin-top: 20px;
+    //margin-top: 20px;
 }
 .index__personal__excel{
     margin-top: 20px;
     background: transparent;
     color: #000000;
+    display: flex;
+    align-items: center;
+}
+.index__personal__excel__img{
+    margin-left: 10px;
+    width: 20px;
+    height: 20px;
+}
+.index__personal__info__name{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 20px;
+}
+.index__personal__info__dep{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 20px;
+}
+.index__personal__info__logout{
+    margin-top: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    color: #FFFFFF;
+    background: #FF7B7B;
+    border-radius: 19px;
+    padding: 6px 71px;
+    width: max-content;
 }
 .optional{
     position: fixed;
     top: 170px;
     right: 20px;
-    width: 60%;
+    width: 40%;
     height: 90%;
 }
 #nav{
@@ -346,6 +382,12 @@ body {
 }
 .second__parent__inner{
     display: flex;
+    align-items: center;
+}
+.second__parent__inner img{
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
 }
 .second__parent__edit-btn{
     margin-left: 10px;
