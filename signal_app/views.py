@@ -162,19 +162,23 @@ def edit_entity(request):
         # TODO: сначала изменить первичную входимость у деталей, потом у сборки изменить децимальник
 
         # если у элемента изменяется только поле name - меняем его сразу
-        if 'name' in data['fields_to_edit'] and 'decimal_number' not in data['fields_to_edit']:
-            bd_model = 'Assembly' if item_type == TypeEnum.ASSEMBLY else 'BaseProduct'
-
-            for item in eval(bd_model).objects.all():
-                print(item.decimal_number)
-
-            print(data['decimal_number'])
-            item_to_change = eval(bd_model).objects.filter(decimal_number=data['decimal_number']).get()
-            item_to_change.name = data['fields_to_edit']['name']
-            item_to_change.save()
+        if 'name' in data['fields_to_edit']:
+            print("HERE")
+            if item_type == TypeEnum.ASSEMBLY:
+                item_to_change = Assembly.objects.filter(decimal_number=data['decimal_number']).get()
+                item_to_change.name = data['fields_to_edit']['name']
+                item_to_change.save()
+            else:
+                item_to_change = BaseProduct.objects.filter(
+                    name=data['old_name'], entry_number=data['entry_number']
+                ).get()
+                item_to_change.name = data['fields_to_edit']['name']
+                item_to_change.save()
+            return JsonResponse({"status_code": 200, "message": "Item has been successfully edited."})
 
         for assembly_to_edit in assemblies_edit:
             old_decimal_number = data['decimal_number']
+            print('QQQQQQ')
 
             # случай когда у предка меняется децимальник и его надо изменить и у первичной входимости потомков
             assembly_decimal_number_to_edit = assembly_to_edit.get('decimal_number', None)
@@ -218,11 +222,20 @@ def edit_entity(request):
 
         if not assemblies_edit:
             # изменяем данные у текущей сборки:
-            assembly_item_to_change = Assembly.objects.filter(decimal_number=data['decimal_number']).get()
-            fields_to_change = data['fields_to_edit']
-            for field in fields_to_change:
-                setattr(assembly_item_to_change, field, fields_to_change[field])
-                assembly_item_to_change.save()
+            if item_type == TypeEnum.ASSEMBLY:
+                print(data['decimal_number'])
+                assembly_item_to_change = Assembly.objects.filter(decimal_number=data['decimal_number']).get()
+                fields_to_change = data['fields_to_edit']
+                for field in fields_to_change:
+                    setattr(assembly_item_to_change, field, fields_to_change[field])
+                    assembly_item_to_change.save()
+            else:
+                print(data['decimal_number'])
+                assembly_item_to_change = BaseProduct.objects.filter(decimal_number=data['decimal_number']).get()
+                fields_to_change = data['fields_to_edit']
+                for field in fields_to_change:
+                    setattr(assembly_item_to_change, field, fields_to_change[field])
+                    assembly_item_to_change.save()
 
             for base_product in base_products_edit:
                 base_product_name = base_product['name']
@@ -233,7 +246,6 @@ def edit_entity(request):
                     name=base_product_name, entry_number=base_product_entry_number
                 ).get()
                 for field in base_product_fields_to_edit:
-                    print(field, base_product_fields_to_edit[field])
                     setattr(base_product_db, field, base_product_fields_to_edit[field])
                     base_product_db.save()
 
