@@ -96,6 +96,7 @@ function sendDetail(){
         };
         sendData['decimal_number'] = elemDecnum;
         sendData['type'] = elemType;
+        sendData['entry_number'] = window.tecval_vhod;
         sendData['fields_to_edit'] = littleAr;
         $.ajax({
             url: 'http://127.0.0.1:8000/assemblies/edit-entity/',
