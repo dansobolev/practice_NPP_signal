@@ -173,7 +173,7 @@ def delete_edge(id, type, product_dict, ancs_lst, descs_lst, id_dict, assembly_l
         assembly_lst, detail_lst = [], []
         for i in tab:
             if i[-1]:
-                detail_lst.append(id_dict[i[0]] - assembly_length + 1)
+                detail_lst.append([i[1], i[2]])
             else:
                 assembly_lst.append(i[0])
         return assembly_lst, detail_lst  # assembly_lst - список децимальников (Assembly), list of ids (BaseProduct)
@@ -211,7 +211,6 @@ def change_edge(id, type, name, product_dict, ancs_lst, descs_lst, id_dict, id_c
         return [], [{'name': changed['name'], 'entry_number': changed['vhod'],
                 'fields_to_edit': {'name': name_c, 'decimal_number': id_c, 'product_type': type_c}}]
     else:
-        print(t['sub_assembly'])
         j = list(map(lambda x: id_dict[x['id']], t['sub_assembly'])).index(path[-1])
         changed = t['sub_assembly'][j].copy()
         tab = [[changed['id'], changed['name'], changed['vhod'], changed['type']],

@@ -93,16 +93,26 @@ def delete_entity(request):
         assemblies_to_delete, base_products_to_delete = delete_edge(
             data['decimal_number'], item_type.value, product_dict, ancs_list, descs_list, id_d, len(assembly)
         )
-        # print(base_products_to_delete)
         try:
+            if not data['decimal_number']:
+                product_name = data['name']
+                product_entry_number = data['entry_number']
+                product = BaseProduct.objects.filter(
+                    name=product_name, entry_number=product_entry_number,
+                ).get()
+                product.delete()
+                return JsonResponse({"status_code": 200, "message": "Item has been successfully deleted."})
+
             # удаление сборок по децимальникам
             if assemblies_to_delete:
                 for assembly_decimal in assemblies_to_delete:
                     assembly = Assembly.objects.filter(decimal_number=assembly_decimal).get()
                     assembly.delete()
                 # удаление подсборок по id в БД
-                for product_id in base_products_to_delete:
-                    product = BaseProduct.objects.filter(id=product_id).get()
+                for item in base_products_to_delete:
+                    name = item[0]
+                    entry_number = item[1]
+                    product = BaseProduct.objects.filter(name=name, entry_number=entry_number).get()
                     product.delete()
             else:
                 for item in base_products_to_delete:
@@ -121,15 +131,15 @@ def delete_entity(request):
 def edit_entity(request):
     data = json.loads(request.body)
     item_type = TypeEnum(int(data['type']))
+    print("data from front: ", data)
     if 'decimal_number' and 'fields_to_edit' in data:
-        bd_model = 'Assembly' if item_type == TypeEnum.ASSEMBLY else 'BaseProduct'
-
         assembly, base_products = get_all_items_from_bd()
         product_dict = bd_to_dict_helper(check_empty_bd=False)
         ancs_list = ancestors_list(assembly, base_products)
         descs_list = to_descendants_list(ancs_list)
         id_d = id_dict(assembly, base_products)
-        old_name = data['old_name']
+        #old_name = data['old_name']
+        old_name = 'Крыша'
 
         id_c = data['fields_to_edit']['decimal_number'] if 'decimal_number' in data['fields_to_edit'] else None
         name_c = data['fields_to_edit']['name'] if 'name' in data['fields_to_edit'] else None
@@ -146,48 +156,74 @@ def edit_entity(request):
             id_c=id_c, name_c=name_c, type_c=type_c,
         )
 
-        if bd_model == 'Assembly':
-            for assembly_to_edit in assemblies_edit:
-                old_decimal_number = data['decimal_number']
+        # TODO: изменять имя самому ( для сборки )
+        # TODO: изменять имя у всех деталей (если другие поля не меняются)
 
-                # случай когда у предка меняется децимальник и его надо изменить и у первичной входимости потомков
-                assembly_decimal_number_to_edit = assembly_to_edit.get('decimal_number', None)
-                if assembly_decimal_number_to_edit is not None:
-                    try:
-                        assembly_to_change = ast.literal_eval(bd_model).objects.filter(
-                            decimal_number=old_decimal_number
-                        ).get()
-                    except Exception as e:
-                        return JsonResponse({"error": "Cannot find item with provided decimal number."})
-                    # блок выполнится, если не вызвалось исключение выше (айтем не был найден в БД)
-                    else:
-                        # меняем децимальник у предка
-                        assembly_to_change.decimal_number = assembly_decimal_number_to_edit
-                        assembly_to_change.save()
+        # TODO: сначала изменить первичную входимость у деталей, потом у сборки изменить децимальник
 
-                        # меняем поле первичная входимость у предков
-                        for base_product in base_products_edit:
-                            base_product_name = base_product['name']
-                            base_product_entry_number = base_product['entry_number']
-                            base_product_fields_to_edit = base_product['fields_to_edit']
+        # если у элемента изменяется только поле name - меняем его сразу
+        if 'name' in data['fields_to_edit'] and 'decimal_number' not in data['fields_to_edit']:
+            bd_model = 'Assembly' if item_type == TypeEnum.ASSEMBLY else 'BaseProduct'
 
-                            base_product_db = BaseProduct.objects.filter(
-                                name=base_product_name, entry_number=base_product_entry_number
-                            )
-                            for field in base_product_fields_to_edit:
-                                base_product_db.field = base_product_fields_to_edit[field]
+            for item in eval(bd_model).objects.all():
+                print(item.decimal_number)
+
+            print(data['decimal_number'])
+            item_to_change = eval(bd_model).objects.filter(decimal_number=data['decimal_number']).get()
+            item_to_change.name = data['fields_to_edit']['name']
+            item_to_change.save()
+
+        for assembly_to_edit in assemblies_edit:
+            old_decimal_number = data['decimal_number']
+
+            # случай когда у предка меняется децимальник и его надо изменить и у первичной входимости потомков
+            assembly_decimal_number_to_edit = assembly_to_edit.get('decimal_number', None)
+            if assembly_decimal_number_to_edit is not None:
+                try:
+                    assembly_to_change = Assembly.objects.filter(
+                        decimal_number=old_decimal_number
+                    ).get()
+                except Exception as e:
+                    return JsonResponse({"error": "Cannot find item with provided decimal number."})
+                # блок выполнится, если не вызвалось исключение выше (айтем не был найден в БД)
                 else:
-                    # случай если у сборки изменяется любое поле, кроме децимального номера
-                    for assemb in assemblies_edit:
-                        assemb_decimal_number = assemb['decimal_number']
-                        assemb_fields_to_edit = assemb['fields_to_edit']
+                    # меняем децимальник у предка
+                    assembly_to_change.decimal_number = assembly_decimal_number_to_edit
+                    assembly_to_change.save()
 
-                        assembly_db = Assembly.objects.filter(
-                            decimal_number=assemb_decimal_number
+                    # меняем поле первичная входимость у предков
+                    for base_product in base_products_edit:
+                        base_product_name = base_product['name']
+                        base_product_entry_number = base_product['entry_number']
+                        base_product_fields_to_edit = base_product['fields_to_edit']
+
+                        base_product_db = BaseProduct.objects.filter(
+                            name=base_product_name, entry_number=base_product_entry_number
                         )
-                        for field in assemb_fields_to_edit:
-                            assembly_db.field = assemb_fields_to_edit[field]
-        else:
+                        for field in base_product_fields_to_edit:
+                            base_product_db.field = base_product_fields_to_edit[field]
+                        base_product_db.save()
+            else:
+                # случай если у сборки изменяется любое поле, кроме децимального номера
+                for assemb in assemblies_edit:
+                    assemb_decimal_number = assemb['decimal_number']
+                    assemb_fields_to_edit = assemb['fields_to_edit']
+
+                    assembly_db = Assembly.objects.filter(
+                        decimal_number=assemb_decimal_number
+                    )
+                    for field in assemb_fields_to_edit:
+                        assembly_db.field = assemb_fields_to_edit[field]
+                    assembly_db.save()
+
+        if not assemblies_edit:
+            # изменяем данные у текущей сборки:
+            assembly_item_to_change = Assembly.objects.filter(decimal_number=data['decimal_number']).get()
+            fields_to_change = data['fields_to_edit']
+            for field in fields_to_change:
+                setattr(assembly_item_to_change, field, fields_to_change[field])
+                assembly_item_to_change.save()
+
             for base_product in base_products_edit:
                 base_product_name = base_product['name']
                 base_product_entry_number = base_product['entry_number']
@@ -195,9 +231,11 @@ def edit_entity(request):
 
                 base_product_db = BaseProduct.objects.filter(
                     name=base_product_name, entry_number=base_product_entry_number
-                )
+                ).get()
                 for field in base_product_fields_to_edit:
-                    base_product_db.field = base_product_fields_to_edit[field]
+                    print(field, base_product_fields_to_edit[field])
+                    setattr(base_product_db, field, base_product_fields_to_edit[field])
+                    base_product_db.save()
 
     return JsonResponse({"status_code": 200, "message": "Item has been successfully edited."})
 
@@ -210,7 +248,7 @@ def export_page(request):
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename=Products(created at {date} by {user}).xlsx'.format(
         date=datetime.now().strftime('%Y-%m-%d'),
-        user=current_user.firstname + current_user.lastname,
+        user=current_user.firstname + ' ' + current_user.lastname,
     )
     resp = bd_to_dict_helper(check_empty_bd=False)
     tab = dict_to_table(resp)
