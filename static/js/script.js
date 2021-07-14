@@ -117,6 +117,7 @@ function sendDetail(){
         sendData['decimal_number'] = elemDecnum;
         sendData['type'] = elemType;
         sendData['entry_number'] = elemVhod;
+        sendData['name'] = elemName;
         $.ajax({
             url: 'http://127.0.0.1:8000/assemblies/delete-entity/',
             type: 'POST',
