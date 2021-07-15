@@ -249,9 +249,11 @@ function askForData(){
 
 
 var recNum = 0;
-function addingData(data, recN, selfInDom){    
+function addingData(data, recN, selfInDom){
+    console.log(data);
     recNum = recN + 1;
-    if(data.type == '0'){
+    console.log("В main: " + data.name);
+    if(data.type == '0' && recN == 0){
         var addButton = document.createElement('button');
         selfInDom.appendChild(addButton);
         addButton.className = "add__button";
@@ -262,13 +264,16 @@ function addingData(data, recN, selfInDom){
         addButton.appendChild(img);
     }
     for(i in data.sub_details){
+
         curItem = data.sub_details[i];
         var newSecondParent = document.createElement('div');
         newSecondParent.className = "second__parent";
         newSecondParent.setAttribute("number", i);
         newSecondParent.setAttribute("decnumber", curItem.id);
         newSecondParent.setAttribute("type", curItem.type);
-        //document.querySelector(".parent").appendChild(newSecondParent);
+
+        console.log("В деталях: " + curItem.name);
+
         selfInDom.appendChild(newSecondParent);
         if(curItem.type == 0){
             newSecondParent.innerHTML = '<div class = "second__parent__inner" ><img src = "../static/img/assembly.png"><div class = "second__parent__inner__text">' + '<span>' + curItem.name + '</span>' + ' ' + curItem.id + '</div><button class = "second__parent__edit-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/edit.png"></button><button class = "second__parent__delete-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/delete.png"></button></div>';
@@ -291,7 +296,10 @@ function addingData(data, recN, selfInDom){
         newSecondParent.setAttribute("number", i);
         newSecondParent.setAttribute("decnumber", curItem.id);
         newSecondParent.setAttribute("type", curItem.type);
-        //document.querySelector(".parent").appendChild(newSecondParent);
+
+
+        console.log("В подсборках: " +curItem.name);
+
         selfInDom.appendChild(newSecondParent);
         //newSecondParent.innerHTML = '<div class = "second__parent__inner" ><div class = "second__parent__inner__text">'+ curItem.name + ' ' + curItem.id + '</div><button class = "second__parent__edit-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/edit.png"></button><button class = "second__parent__delete-btn"><img class = "second__parent__edit-btn__img" src = "../static/img/delete.png"></button></div>';
         if(curItem.type == 0){
@@ -308,6 +316,17 @@ function addingData(data, recN, selfInDom){
         }
 
         //newSecondParent.innerHTML = ''+ curItem.name +'';
+
+        if(data.type == '0'){
+            var addButton = document.createElement('button');
+            newSecondParent.appendChild(addButton);
+            addButton.className = "add__button";
+            addButton.innerHTML = 'Добавить элемент';
+            img = document.createElement('img');
+            img.setAttribute('src', '../static/img/add.svg');
+            img.className = "add__button__img"
+            addButton.appendChild(img);
+        }
 
         if( curItem.sub_assembly !=  ''){
             addingData(curItem, recNum, newSecondParent);
